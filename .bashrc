@@ -138,5 +138,6 @@ tmux-project() {
 alias mux=tmuxifier
 alias tload="tmuxifier load-session"
 alias cls='clear'
+alias hello='echo "Hello World"'
 
 export EDITOR='nvim'
