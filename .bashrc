@@ -120,8 +120,8 @@ export NVM_DIR="$HOME/.nvm"
 # Tmuxifier for tmux
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier/layouts"
-eval "$(tmuxifier init -)"
 
+eval "$(tmuxifier init -)"
 # Tmux projects
 tmux-project() {
   local script="$HOME/.config/tmux-projects/$1.sh"
@@ -133,11 +133,23 @@ tmux-project() {
   fi
 }
 
+# Git Add-Commit-Push: gitacp [msg]
+gitacp() {
+  local message="${1:-misc}"
+  git add . && git commit -m "$message" && git push
+}
+
+# Update all packages: sysup
+sysup() {
+  sudo apt update && sudo apt upgrade -y
+}
+
 # Custom aliases
 # alias mux=tmuxinator
 alias mux=tmuxifier
 alias tload="tmuxifier load-session"
 alias cls='clear'
 alias hello='echo "Hello World"'
+
 
 export EDITOR='nvim'
