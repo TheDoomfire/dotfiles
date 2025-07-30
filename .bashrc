@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+export GITHUB_USERNAME="TheDoomfire"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -103,10 +105,10 @@ fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
+    # sources /etc/bash.bashrc).
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
@@ -133,15 +135,53 @@ tmux-project() {
   fi
 }
 
+# ------ Command aliasing ------
+
+# --- Git ---
+# TODO: Test this!
+# Git clone shortcut function
+gitclone() {
+
+    if [ $# -ne 1 ]; then
+        echo "Usage: gitclone <repo>"
+        return 1
+    fi
+
+    local repo_input="$1"
+    local repo_url
+
+    # Check if input contains a slash (other user's repo)
+    # TODO: Make it also check if it ends with .git?
+    if [[ "$repo_input" == */* ]]; then
+        repo_url="git@github.com:${repo_input}.git"
+    else
+        # Use personal repo
+        repo_url="git@github.com:${GITHUB_USERNAME}/${repo_input}.git"
+    fi
+
+    echo "Cloning $repo_url"
+    git clone "$repo_url"
+}
+
+
 # Git Add-Commit-Push: gitacp [msg]
 gitacp() {
   local message="${1:-misc}"
   git add . && git commit -m "$message" && git push
 }
 
+gitpull() {
+    git fetch && \
+    git status && \
+    # TODO: If there are changes, ask for confirmation? Or maybe it already asks for it?
+    git pull
+    # Have this instead of git pull?
+    # git merge @{u}    # Merge upstream branch (same as pull without fetch)
+}
+
 # Update all packages: sysup
 sysup() {
-  sudo apt update && sudo apt upgrade -y
+  sudo apt update && \ sudo apt upgrade -y
 }
 
 # Custom aliases
@@ -151,5 +191,5 @@ alias tload="tmuxifier load-session"
 alias cls='clear'
 alias hello='echo "Hello World"'
 
-
+# TODO: add first? Not being used?
 export EDITOR='nvim'
