@@ -271,7 +271,7 @@ friend() {
 # alias mux=tmuxinator
 alias mux=tmuxifier
 alias tload="tmuxifier load-session"
-alias cls='clear'
+alias gs='git status'
 # alias reload='source ~/.bashrc' 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -279,6 +279,7 @@ alias ....='cd ../../..'
 alias ~='cd ~'
 alias home='cd ~'
 alias c='clear'
+alias cls='clear'
 
 # TODO: add first? Not being used?
 export EDITOR='nvim'
