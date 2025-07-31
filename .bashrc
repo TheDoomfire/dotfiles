@@ -2,7 +2,48 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# MAIN TODO:
+#   - Split into multiple files
+#   - Variables file. For a central place to store variables.
+#   - Utils echo with colors.
+#   - Default help popup. So I can remember all the custom commands.
+
+# ------ Variables ------
 export GITHUB_USERNAME="TheDoomfire"
+export GITHUB_DEFAULT_REPO_FOLDER="~/Documents/GitHub"
+
+# ------ Utils ------
+
+cprint() {
+    local reset="\e[0m"
+    local msg_type="info"
+    local msg=""
+
+    # Parse message type if specified
+    # TODO: No one source of truth for this. Make one.
+    if [[ "$1" =~ ^(success|error|warning|info|debug|highlight)$ ]]; then
+        msg_type="$1"
+        shift
+    fi
+    msg="$*"
+
+    # 256-color palette definitions
+    declare -A colors=(
+        [success]="\e[38;5;82m"     # Bright green
+        [error]="\e[1;38;5;196m"    # Bold vivid red
+        [warning]="\e[38;5;226m"    # Bright yellow
+        [info]="\e[38;5;39m"        # Deep sky blue
+        [debug]="\e[38;5;247m"      # Medium gray
+        [highlight]="\e[1;38;5;213m" # Bold bright pink
+        [default]="\e[1;32m"        # Bold green
+    )
+
+    # Use default if no message
+    [ -z "$msg" ] && msg="[No message]" && msg_type="warning"
+
+    # Print with appropriate color
+    printf "${colors[$msg_type]}%s${reset}\n" "$msg"
+}
 
 # If not running interactively, don't do anything
 case $- in
@@ -130,7 +171,7 @@ tmux-project() {
   if [ -f "$script" ]; then
     bash "$script"
   else
-    echo "Project not found. Available projects:"
+    cprint error "Project not found. Available projects:"
     ls -1 ~/.config/tmux-projects | sed 's/\.sh$//'
   fi
 }
@@ -143,7 +184,7 @@ tmux-project() {
 gitclone() {
 
     if [ $# -ne 1 ]; then
-        echo "Usage: gitclone <repo>"
+        cprint info "Usage: gitclone <repo>"
         return 1
     fi
 
@@ -159,18 +200,20 @@ gitclone() {
         repo_url="git@github.com:${GITHUB_USERNAME}/${repo_input}.git"
     fi
 
-    echo "Cloning $repo_url"
+    cprint warning "Cloning $repo_url"
     git clone "$repo_url"
 }
 
 
 # Git Add-Commit-Push: gitacp [msg]
-gitacp() {
+# gitacp() {
+ga() {
   local message="${1:-misc}"
   git add . && git commit -m "$message" && git push
 }
 
-gitpull() {
+# gitpull() {
+gp() {
     git fetch && \
     git status && \
     # TODO: If there are changes, ask for confirmation? Or maybe it already asks for it?
@@ -179,9 +222,49 @@ gitpull() {
     # git merge @{u}    # Merge upstream branch (same as pull without fetch)
 }
 
-# Update all packages: sysup
+# TODO: Run at startup? With backup.
+# TODO: TEST!
 sysup() {
-  sudo apt update && \ sudo apt upgrade -y
+  cprint info "Updating system..."
+  # Update APT packages and system
+  sudo apt update && \
+  sudo apt upgrade -y && \
+  sudo apt full-upgrade -y && \
+  sudo apt autoremove -y && \
+  sudo apt autoclean
+
+  # Update Flatpaks
+  if command -v flatpak &> /dev/null; then
+    # echo "Updating Flatpaks..."
+    # cprint info "Updating Flatpaks..."
+    cprint info "Updating Flatpaks..."
+    flatpak update -y
+  fi
+
+  # # Update firmware (if fwupd is installed)
+  # if command -v fwupdmgr &> /dev/null; then
+  #   echo "Checking for firmware updates..."
+  #   sudo fwupdmgr refresh
+  #   sudo fwupdmgr update
+  # fi
+
+  cprint success "Finished updating"
+}
+
+reloading() {
+  cprint info "Reloading bashrc..."
+  source ~/.bashrc
+}
+
+# --- TESTING ---
+friend() {
+  cprint "This is a test"
+  cprint info "This is an info message"
+  cprint success "This is a success message"
+  cprint error "This is an error message"
+  cprint warning "This is a warning message"
+  cprint debug "This is a debug message"
+  cprint highlight "This is a highlight message"
 }
 
 # Custom aliases
@@ -189,7 +272,13 @@ sysup() {
 alias mux=tmuxifier
 alias tload="tmuxifier load-session"
 alias cls='clear'
-alias hello='echo "Hello World"'
+# alias reload='source ~/.bashrc' 
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ~='cd ~'
+alias home='cd ~'
+alias c='clear'
 
 # TODO: add first? Not being used?
 export EDITOR='nvim'
