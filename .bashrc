@@ -180,6 +180,8 @@ tmux-project() {
 
 # --- Git ---
 # TODO: Test this!
+# If your at home directory, perhaps ask for confirmation? If false then put at Documents/Github folder. Perhaps name the folder something else?
+
 # Git clone shortcut function
 gitclone() {
 
@@ -254,6 +256,22 @@ sysup() {
 reloading() {
   cprint info "Reloading bashrc..."
   source ~/.bashrc
+}
+
+tmux() {
+    # Check if we're already inside tmux or arguments were provided
+    if [ -n "$TMUX" ] || [ $# -gt 0 ]; then
+        command tmux "$@"
+        return
+    fi
+
+    # Try to attach to an existing session
+    if command tmux has-session 2>/dev/null; then
+        command tmux attach
+    else
+        # command tmux new-session
+        command tmux
+    fi
 }
 
 # --- TESTING ---

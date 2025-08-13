@@ -1,0 +1,28 @@
+# Essential tools
+git
+neovim
+tmux
+
+# Development
+build-essential
+python3-pip
+nodejs
+
+# System utilities
+# htop
+# rsync
+
+# Editing
+kdenlive
+gimp
+blender
+
+# Media
+freetube
+
+# Windows's
+wine
+
+# Gamings
+steam
+dolphin-emu
