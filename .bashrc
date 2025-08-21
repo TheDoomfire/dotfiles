@@ -274,6 +274,39 @@ tmux() {
     fi
 }
 
+# Installs .EXE file in Bottles
+winexec() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: winexec <path-to-exe> [bottle-name]"
+        echo "If bottle-name is not provided, will use 'Default'"
+        return 1
+    fi
+
+    local exe_file="$1"
+    local bottle_name="${2:-Gaming}"  # Use "Gaming" if no bottle specified
+    local source_dir=$(dirname "$(realpath "$exe_file")")
+    
+    # Let the user choose where to move the directory
+    echo "Where would you like to move the game directory? (Press Enter for current directory)"
+    echo "TODO: Add a list of options?"
+    # read -p "Target directory: " target_dir
+    # target_dir=${target_dir:-$(pwd)}  # Use current directory if empty
+    local target_dir="/mnt/linux_apps/Data/bottles/Gaming/drive_c/INSTALLATION_FILES"  
+    
+    # Create target directory if it doesn't exist
+    mkdir -p "$target_dir"
+    
+    # Move the entire directory containing the EXE
+    local dir_name=$(basename "$source_dir")
+    mv -v "$source_dir" "$target_dir/"
+    
+    # New path to the EXE
+    local new_exe_path="$target_dir/$dir_name/$(basename "$exe_file")"
+    
+    # Run in Bottles
+    flatpak run --command=bottles-cli com.usebottles.bottles run -b "$bottle_name" -e "$new_exe_path"
+}
+
 # --- TESTING ---
 friend() {
   cprint "This is a test"
