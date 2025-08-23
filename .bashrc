@@ -243,6 +243,9 @@ sysup() {
     flatpak update -y
   fi
 
+  # Update Cinnamon
+  cinnamon-spice-updater --update-all
+
   # # Update firmware (if fwupd is installed)
   # if command -v fwupdmgr &> /dev/null; then
   #   echo "Checking for firmware updates..."
