@@ -219,7 +219,7 @@ gp() {
     git fetch && \
     git status && \
     # TODO: If there are changes, ask for confirmation? Or maybe it already asks for it?
-    git pull
+    git pull --rebase
     # Have this instead of git pull?
     # git merge @{u}    # Merge upstream branch (same as pull without fetch)
 }
