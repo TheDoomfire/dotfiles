@@ -310,6 +310,14 @@ winexec() {
     flatpak run --command=bottles-cli com.usebottles.bottles run -b "$bottle_name" -e "$new_exe_path"
 }
 
+minecraft() {
+  # TODO: maybe run the server in the background?
+  # cd /mnt/movies_games/Servers/Minecraft/EmmasServer
+  # java -Xms4G -Xmx4G -jar paper-*.jar --nogui 
+  cd /mnt/linux_apps/Games/SKlauncher # TODO: Make this a variable?
+  java -jar SKlauncher-*.jar &
+}
+
 # --- TESTING ---
 friend() {
   cprint "This is a test"
