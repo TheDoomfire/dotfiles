@@ -5,6 +5,8 @@ return {
   },
   config = function()
     local null_ls = require("null-ls")
+    -- local helpers = require("null-ls.helpers")
+    -- local none_ls = require("none-ls")
 
     null_ls.setup({
       sources = {
@@ -12,6 +14,21 @@ return {
         null_ls.builtins.formatting.prettier,
         require("none-ls.formatting.ruff"),
         --null_ls.builtins.formatting.djlint,
+
+        null_ls.builtins.diagnostics.stylelint.with({
+          filetypes = { "css", "scss", "less", "astro" },
+          extra_args = { "--config", "stylelint.config.mjs" },
+        }),
+
+        -- null_ls.builtins.code_actions.stylelint.with({
+        --     filetypes = { "css", "scss", "less", "astro" },
+        -- }),
+
+        -- null_ls.builtins.code_actions.stylelint,
+
+        null_ls.builtins.formatting.stylelint.with({
+          filetypes = { "css", "scss", "less", "astro" },
+        }),
 
         -- DIAGNOSTICS
         require("none-ls.diagnostics.eslint_d"),

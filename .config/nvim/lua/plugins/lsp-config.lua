@@ -27,10 +27,10 @@ return {
       lspconfig.jinja_lsp.setup({
         capabilities = capabilities,
         -- filetypes = { "jinja", "jinja.html", "njk", "nunjucks" },
-filetypes = { "html", "jinja", "njk" },
-init_options = {
-    enableEmmet = true
-  }
+        filetypes = { "html", "jinja", "njk" },
+        init_options = {
+            enableEmmet = true
+          }
         -- settings = {
         --   jinja_lsp = {
         --     enableEmmet = true, -- Enable Emmet for HTML in Jinja files
@@ -43,6 +43,7 @@ init_options = {
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
       })
+
       -- lspconfig.html.setup({
       --   capabilities = capabilities,
       --   filetypes = {
@@ -60,7 +61,39 @@ init_options = {
       --     },
       --   },
       -- })
+      
+
+      lspconfig.astro.setup({
+   capabilities = capabilities,
+   -- on_attach = on_attach,
+   filetypes = { "astro" },
+  })
+
+      --code style, warnings, autofix
+      lspconfig.stylelint_lsp.setup({
+        filetypes = {
+          "css",
+          "scss",
+          "less",
+          "astro",
+          "vue",
+          "svelte",
+          "html"  -- sometimes needed for astro
+        },
+        settings = {
+          -- stylelintplus = {
+            autoFixOnSave = true,
+            autoFixOnFormat = true,
+            -- Add these for better astro support
+            configFile = "stylelint.config.mjs",
+            validateOnType = true,
+          -- }
+        }
+      })
+
+      -- autocomplete, hover info
       lspconfig.cssls.setup({})
+
       lspconfig.pyright.setup({
         capabilities = capabilities,
         settings = {
