@@ -4,21 +4,42 @@ This is my personal dotfiles repository.
 
 ## TODO:
 
-- [x] Add bashrc
-- [x] Add tmux.conf
-- [x] Add .config/nvim 
-- [ ] Add .config/autostart ? 
-- [ ] Add mint config ?
-- [ ] Bootstrap file. To download the repo and run the install script. Make stow ignore it? "🚀 Starting system bootstrap..."
+- Add .config/autostart ? 
+- Add mint config ?
+- Bootstrap file. To download the repo and run the install script?
 
 ## Installation
 
+
+Already have this locally?
 ```bash
-git clone git@github.com:TheDoomfire/dotfiles.git ~/dotfiles
+bash install.sh
+```
+
+Download it:
+```bash
+git clone git@github.com:TheDoomfire/dotfiles.git ~/.dotfiles
 ~/.dotfiles/.config/system-settings/install.sh
 ```
 
 Or try this:
 ```bash
-git clone https://github.com/TheDoomfire/dotfiles.git ~/dotfiles
+git clone https://github.com/TheDoomfire/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+bash install.sh
+```
+
+## Fixes
+
+Older one folder version? The one without /home and /system
+
+Uinstall stow:
+```bash
+stow -D .
+find ~ -maxdepth 2 -xtype l -delete
+```
+
+Getting errors?
+```bash
+find ~ -maxdepth 2 -xtype l -delete
 ```

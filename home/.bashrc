@@ -257,8 +257,13 @@ sysup() {
 }
 
 reloading() {
+  # Asks for the password upfront if the timestamp has expired
+  sudo -v
   cprint info "Reloading bashrc..."
   source ~/.bashrc
+  cprint info "Reloading keyd..."
+  sudo keyd reload
+  cprint success "Finished reloading!"
 }
 
 tmux() {
@@ -345,6 +350,8 @@ alias cls='clear'
 
 # TODO: add first? Not being used?
 export EDITOR='nvim'
+# So I can use sudoedit
+export SUDO_EDITOR='nvim'
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
