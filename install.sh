@@ -14,3 +14,6 @@ sudo stow -t / -D system
 # Symlinks all files.
 stow -v -t ~ home 
 sudo stow -v -t / system
+
+# Restove
+# stow -R -v -t ~ home

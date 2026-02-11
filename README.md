@@ -7,6 +7,7 @@ This is my personal dotfiles repository.
 - Add .config/autostart ? 
 - Add mint config ?
 - Bootstrap file. To download the repo and run the install script?
+- Symlink entire folders. If adding a file, it wont always be symlinked.
 
 ## Installation
 
@@ -42,4 +43,9 @@ find ~ -maxdepth 2 -xtype l -delete
 Getting errors?
 ```bash
 find ~ -maxdepth 2 -xtype l -delete
+```
+
+Need to re stow?
+```bash
+stow -R -v -t ~ home
 ```
