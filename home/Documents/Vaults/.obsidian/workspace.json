@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "food-recipes.md",
+                "file": "notes/ideas/Domain Names.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "food-recipes"
+              "title": "Domain Names"
             }
           }
         ],
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "food-recipes.md",
+                "file": "notes/ideas/Domain Names.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +119,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for food-recipes"
+              "title": "Backlinks for Domain Names"
             }
           },
           {
@@ -200,10 +200,15 @@
   },
   "active": "107705b79a7ed8ae",
   "lastOpenFiles": [
+    "notes/ideas/projects/food-recipes.md",
     "notes/ideas/Domain Names.md",
-    "food-recipes.md",
-    "notes/ideas/projects/diy-tools.md",
     "notes/README.md",
+    "notes/ideas/projects/diy-tools.md",
+    "notes/Web Development/Website Template.md",
+    "notes/Web Development/Web Scraping.md",
+    "notes/Web Development/User Interface.md",
+    "notes/Web Development/Initial Research.md",
+    "notes/Web Development",
     "notes/ideas/projects",
     "notes/ideas",
     "notes",
