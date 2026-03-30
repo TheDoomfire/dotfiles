@@ -17,3 +17,12 @@ sudo stow -v -t / system
 
 # Restove
 # stow -R -v -t ~ home
+
+
+# TODO: Add all these, so install all apps. 
+# Source: https://github.com/TheDoomfire/bootstrap-os
+
+# echo "📦 Installing packages..."
+
+
+# echo "⚙️  Applying system settings..."

@@ -2,12 +2,19 @@
 
 This is my personal dotfiles repository.
 
+## How to use
+
+
+
 ## TODO:
 
 - Add .config/autostart ? 
 - Add mint config ?
 - Bootstrap file. To download the repo and run the install script?
 - Symlink entire folders. If adding a file, it wont always be symlinked.
+
+**Apps: from .config**
+- libreoffice (for dark mode)
 
 ## Installation
 
