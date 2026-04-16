@@ -278,6 +278,12 @@ reloading() {
   cprint success "Finished reloading!"
 }
 
+
+# Create a combined audio sink. Check sound and enable it.
+combinedaudio() {
+  pactl load-module module-combine-sink sink_name=Combined_Audio
+}
+
 tmux() {
     # Check if we're already inside tmux or arguments were provided
     if [ -n "$TMUX" ] || [ $# -gt 0 ]; then
