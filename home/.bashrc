@@ -256,6 +256,18 @@ sysup() {
   cprint success "Finished updating"
 }
 
+distroupdate() {
+  sudo apt update && \
+  sudo apt dist-upgrade -y && \
+  sudo apt install mintupgrade && \
+  sudo mintupgrade
+
+  # After rebooting, run:
+  # sudo apt remove mintupgrade
+}
+
+
+
 reloading() {
   # Asks for the password upfront if the timestamp has expired
   sudo -v
