@@ -8,12 +8,16 @@ cd "$DOTFILES_DIR"
 # If not, install it. Flatpak first then apt.
 
 # DELETES ALL SYMLINKS.
+# stow -D -t ~ home home-docs-vaults
 stow -D -t ~ home
+stow -D -t ~/Documents/Vaults obsidian-config
 sudo stow -t / -D system
 
 # Symlinks all files.
-stow -v -t ~ home 
+stow -v -t ~ home
+stow -v -R -t ~/Documents/Vaults obsidian-config
 sudo stow -v -t / system
+# stow -v -R --adopt -t ~ home # Adopt the existing folder
 
 # Restove
 # stow -R -v -t ~ home
