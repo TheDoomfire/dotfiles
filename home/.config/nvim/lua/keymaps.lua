@@ -51,29 +51,56 @@ Map("t", "<C-Right>", "<cmd>vertical resize +2<CR>")
 -- vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 
 
-vim.keymap.set("n", "<A-Down>", ":m .+1<cr>==", { noremap = true, silent = true, desc = "Move line down" })
-vim.keymap.set("n", "<A-Up>", ":m .-2<cr>==", { noremap = true, silent = true, desc = "Move line up" })
-vim.keymap.set(
-  "i",
-  "<A-Up>",
-  "<Esc>:m .+1<cr>==gi",
-  { noremap = true, silent = true, desc = "Move line down (insert mode)" }
-)
-vim.keymap.set(
-  "i",
-  "<A-Down>",
-  "<Esc>:m .-2<cr>==gi",
-  { noremap = true, silent = true, desc = "Move line up (insert mode)" }
-)
-vim.keymap.set("x", "<A-Up>", ":m '>+1<cr>gv=gv", { noremap = true, silent = true, desc = "Move block down" })
-vim.keymap.set("x", "<A-Down>", ":m '<-2<cr>gv=gv", { noremap = true, silent = true, desc = "Move block up" })
+-- vim.keymap.set("n", "<A-Down>", ":m .+1<cr>==", { noremap = true, silent = true, desc = "Move line down" })
+-- vim.keymap.set("n", "<A-Up>", ":m .-2<cr>==", { noremap = true, silent = true, desc = "Move line up" })
+-- vim.keymap.set(
+--   "i",
+--   "<A-Up>",
+--   "<Esc>:m .+1<cr>==gi",
+--   { noremap = true, silent = true, desc = "Move line down (insert mode)" }
+-- )
+-- vim.keymap.set(
+--   "i",
+--   "<A-Down>",
+--   "<Esc>:m .-2<cr>==gi",
+--   { noremap = true, silent = true, desc = "Move line up (insert mode)" }
+-- )
+-- vim.keymap.set("x", "<A-Up>", ":m '>+1<cr>gv=gv", { noremap = true, silent = true, desc = "Move block down" })
+-- vim.keymap.set("x", "<A-Down>", ":m '<-2<cr>gv=gv", { noremap = true, silent = true, desc = "Move block up" })
+
 
 -- Copy lines with Alt+Shift+Up/Down
-Map("n", "<A-S-Up>", ":copy .-1<CR>", { desc = "Copy line up" })
-Map("n", "<A-S-Down>", ":copy .<CR>", { desc = "Copy line down" })
-Map("v", "<A-S-Down>", ":copy '><CR>gv", { desc = "Copy selection down" })
-Map("v", "<A-S-Up>", ":copy '<-1<CR>gv", { desc = "Copy selection up" })
-Map("v", "<A-S-Down>", ":copy '><CR>gv", { desc = "Copy selection down" })
+-- TODO: Make this work with hjkl keys
+-- Normal Mode
+Map("n", "<A-Up>", ":m .-2<CR>==", { desc = "Move line up" })
+Map("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+Map("n", "<A-Down>", ":m .+1<CR>==", { desc = "Move line down" })
+Map("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+-- Insert Mode (Uses <Esc> to run command, then gi to return to insert)
+Map("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", { desc = "Move line up" })
+Map("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { desc = "Move line up" })
+Map("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down" })
+Map("i", "<A-j>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down" })
+-- Visual / Select Mode (x or v)
+-- Note: '< refers to the start of the selection, '> refers to the end
+Map("x", "<A-Up>", ":m '<-2<CR>gv=gv", { desc = "Move block up" })
+Map("x", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move block up" })
+Map("x", "<A-Down>", ":m '>+1<CR>gv=gv", { desc = "Move block down" })
+Map("x", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move block down" })
+
+-- -- Copy lines with Alt+Shift+Up/Down
+-- Map("n", "<A-S-Up>", ":m .-1<CR>", { desc = "Copy line up" })
+-- Map("n", "<A-S-Down>", ":m .<CR>", { desc = "Copy line down" })
+-- Map("v", "<A-S-Down>", ":m '><CR>gv", { desc = "Copy selection down" })
+-- Map("v", "<A-S-Up>", ":m '<-1<CR>gv", { desc = "Copy selection up" })
+-- Map("v", "<A-S-Down>", ":m '><CR>gv", { desc = "Copy selection down" })
+
+-- -- Move lines with Alt+Shift+Up/Down (Normal Mode)
+-- Map("n", "<A-S-Up>", ":m .-2<CR>==", { desc = "Move line up" })
+-- Map("n", "<A-S-Down>", ":m .+1<CR>==", { desc = "Move line down" })
+-- -- Move selection with Alt+Shift+Up/Down (Visual Mode)
+-- Map("v", "<A-S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+-- Map("v", "<A-S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 
 -- Swap windows with Shift + Arrow Keys
 -- TODO: perhaps have them just work with <C-w>Left/Right/Up/Down
@@ -85,3 +112,6 @@ vim.api.nvim_set_keymap("n", "<S-Up>", "<C-w>K", { noremap = true, silent = true
 -- Indent with Tab in visual mode
 Map('v', '<Tab>',   '>gv')
 Map('v', '<S-Tab>', '<gv')
+
+-- Clear search highlights when pressing <Esc> in normal mode
+Map('n', '<Esc>', '<cmd>nohlsearch<CR>')

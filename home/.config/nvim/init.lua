@@ -40,6 +40,7 @@ vim.opt.rtp:prepend(lazypath)
 -- })
 
 require("vim-options")
+require("vim-autocmd")
 
 -- require("commands")
 -- Load all command files (same pattern as plugins)
