@@ -15,6 +15,10 @@ vim.cmd("set smarttab")
 vim.cmd("set encoding=UTF-8")
 vim.cmd("set clipboard=unnamedplus")
 
+-- vim.opt.showtabline = 2 -- Always show tabline
+-- -- Show line numbers in the tabline
+-- vim.o.tabline = "%!v:lua.require'util'.tabline()"
+
 -- Keeps X lines above/below the cursor, so I aren't always looking at the very bottom of the screen.
 vim.opt.scrolloff = 8 -- Not sure if this is a good idea
 

@@ -23,6 +23,10 @@ vim.g.mapleader = " "
 --     {"yc", "yygccp", { remap = true }},
 -- }
 
+-- Multiline edit.
+Map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- Map("n", "<leader>rn", vim.lsp.buf.rename)
+
 -- Duplicate a line and comment out the first line
 Map("n", "yc", "yygccp", { remap = true })
 
