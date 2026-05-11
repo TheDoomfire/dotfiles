@@ -20,8 +20,8 @@ vim.opt.scrolloff = 8 -- Not sure if this is a good idea
 
 vim.opt.spell = true
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
+vim.g.maplocalleader = " "
 --  - Folding -
 -- vim.opt.foldmethod = "syntax"
 vim.o.foldcolumn = "1" -- '0' is not bad

@@ -1,11 +1,16 @@
 return {
   "mfussenegger/nvim-dap",
+
   dependencies = {
     "rcarriga/nvim-dap-ui",
-    dependencies = { "nvim-neotest/nvim-nio" }
+    "nvim-neotest/nvim-nio",
+    -- dependencies = { "nvim-neotest/nvim-nio" }
   },
   config = function()
     local dap, dapui = require("dap"), require("dapui")
+
+    -- Make it look better by passing stuff into the setup function
+    dapui.setup({})
 
     dap.listeners.before.attach.dapui_config = function()
       dapui.open()
@@ -24,5 +29,6 @@ return {
     vim.keymap.set("n", "<F12>", dap.step_out, {})
     vim.keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, {})
     vim.keymap.set("n", "<Leader>B", dap.set_breakpoint, {})
+
   end,
 }

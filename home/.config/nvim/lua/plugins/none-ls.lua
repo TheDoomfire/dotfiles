@@ -75,12 +75,10 @@ return {
           buffer = bufnr, -- Buffer-local
           desc = "Show hover documentation/actions",
         })
+
       end,
       debug = true,
     })
 
-    -- Fallback if format on save is not working.
-    vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
-    -- TODO: Add format when leaving window or quit. To have a auto formatting.
   end,
 }

@@ -40,6 +40,7 @@ vim.opt.rtp:prepend(lazypath)
 -- })
 
 require("vim-options")
+
 require("vim-autocmd")
 
 -- require("commands")
@@ -49,6 +50,9 @@ for _, file in ipairs(command_files) do
 	local module = "commands." .. vim.fn.fnamemodify(file, ":t:r")
 	pcall(require, module) -- Load safely
 end
+
 require("lazy").setup("plugins")
 
 require("keymaps")
+
+-- vim.lsp.enable({"lua_ls", "astro"})
