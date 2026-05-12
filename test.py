@@ -1,13 +1,12 @@
 # from config import *
 
-
-penis = "Hello World"
-penis = "Hello World"
-penis = "Hello World"
-penis = "Hello World"
-penis = "Hello World"
-penis = "Hello World"
-penis = "Hello World"
+testing = "Bye World"
+testing = "Bye World"
+testing = "Bye World"
+testing = "Bye World"
+testing = "Bye World"
+testing = "Bye World"
+testing = "Bye World"
 
 def main():
     print("Running main...")

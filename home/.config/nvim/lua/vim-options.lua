@@ -19,6 +19,9 @@ vim.cmd("set clipboard=unnamedplus")
 -- -- Show line numbers in the tabline
 -- vim.o.tabline = "%!v:lua.require'util'.tabline()"
 
+-- Shows live updates 
+vim.opt.inccommand = "split" -- or "nosplit"
+
 -- Keeps X lines above/below the cursor, so I aren't always looking at the very bottom of the screen.
 vim.opt.scrolloff = 8 -- Not sure if this is a good idea
 
