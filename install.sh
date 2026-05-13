@@ -31,6 +31,9 @@ sudo stow -v -t / system
 # Heavy files
 stow -vt "$HOME" -d "$(dirname "$SYMLINKS_PATH")" "$(basename "$SYMLINKS_PATH")"
 
+# Reastow example:
+# stow -R -t ~ symlinks
+
 # TODO: Add all these, so install all apps. 
 # Source: https://github.com/TheDoomfire/bootstrap-os
 
