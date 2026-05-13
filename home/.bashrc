@@ -282,6 +282,8 @@ sysclean() {
 
     echo "--- Current Disk Usage ---"
     df -h / | grep /
+
+    cprint success "Finished cleaning!"
 }
 
 distroupdate() {
@@ -393,6 +395,7 @@ alias ~='cd ~'
 alias home='cd ~'
 alias c='clear'
 alias cls='clear'
+alias sv='source .venv/bin/activate'
 
 # TODO: add first? Not being used?
 export EDITOR='nvim'
