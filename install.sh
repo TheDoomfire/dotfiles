@@ -2,6 +2,10 @@
 
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
+SCRIPTS_DIR="$DOTFILES_DIR/scripts"
+
+HDD_PATH="/mnt/movies_games"
+SYMLINKS_PATH="$HDD_PATH/data/symlinks"
 
 # Incase it's run outside of this directory.
 cd "$DOTFILES_DIR"
@@ -24,32 +28,12 @@ stow -v -R -t ~/Documents/Vaults obsidian-config
 sudo stow -v -t / system
 # stow -v -R --adopt -t ~ home # Adopt the existing folder
 
-# Restove
-# stow -R -v -t ~ home
-
+# Heavy files
+stow -vt "$HOME" -d "$(dirname "$SYMLINKS_PATH")" "$(basename "$SYMLINKS_PATH")"
 
 # TODO: Add all these, so install all apps. 
 # Source: https://github.com/TheDoomfire/bootstrap-os
 
-# echo "📦 Installing packages..."
-
-
-# echo "⚙️  Applying system settings..."
-
 # ----- Set up nerd fonts -----
-# - TODO: Make this a function. In case I want to change the font.
 
-FONTS_DIR="$HOME/.local/share/fonts"
-FONT_NAME="Iosevka"
-FONT_TEMP="/tmp/$FONT_NAME.zip"
-FONT_DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$FONT_NAME.zip"
-
-mkdir -p "$FONT_DIR"
-# Download the zip file to your /tmp folder
-curl -L -o "$FONT_TEMP" "$FONT_DOWNLOAD_URL"
-# Unzip it into your font directory
-unzip "$FONT_TEMP"  -d "$FONT_DIR/${FONT_NAME}NerdFont"
-# Clean up the zip file
-rm "$FONT_TEMP"   
-# Update Font Cache
-fc-cache -fv
+bash "$SCRIPTS_DIR/fonts.sh"

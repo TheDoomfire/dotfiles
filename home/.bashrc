@@ -256,6 +256,34 @@ sysup() {
   cprint success "Finished updating"
 }
 
+sysclean() {
+    echo "--- Cleaning APT packages ---"
+    sudo apt-get clean
+    sudo apt-get autoclean
+    sudo apt-get autoremove -y
+
+    echo "--- Cleaning Flatpak runtimes ---"
+    flatpak uninstall --unused -y
+
+    echo "--- Vacuuming Systemd logs to X MB ---"
+    sudo journalctl --vacuum-size=200M
+
+    echo "--- Clearing cache ---"
+    rm -rf ~/.cache/thumbnails/*
+    # TODO: Make so it only clears old files
+    # rm -rf ~/.cache/ms-playwright/*
+
+    echo "--- Checking for large log files in /var/log ---"
+    # This lists the top 5 largest logs without deleting them
+    sudo du -h /var/log | sort -rh | head -n 5
+
+    echo "--- Checking biggest flatpak apps ---"
+    du -h --max-depth=2 ~/.var/app | sort -hr
+
+    echo "--- Current Disk Usage ---"
+    df -h / | grep /
+}
+
 distroupdate() {
   sudo apt update && \
   sudo apt dist-upgrade -y && \

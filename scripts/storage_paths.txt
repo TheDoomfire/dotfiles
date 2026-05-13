@@ -1,0 +1,2 @@
+/playwright_cache/ms-playwright|/.cache/ms-playwright
+/bottles_data/bottles|/.var/app/com.usebottles.bottles/data/bottles
