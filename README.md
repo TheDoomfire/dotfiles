@@ -10,15 +10,18 @@ This is my personal dotfiles repository.
 - Add .config/autostart ? 
 - Add mint config ?
 - Bootstrap file. To download the repo and run the install script?
-- Symlink entire folders. If adding a file, it wont always be symlinked.
-
-- Add "ctrl+l" to change all occurences of the selected word at the same time. Like in vscode.
 
 **Apps: from .config**
 - libreoffice (for dark mode)
 
-## Installation
+### Neovim
 
+- Add colors to .md files.
+- Auto import functions you use if its found somewhere else.
+- Add a way to surround a word/line with something. Like " " or whatever.
+
+
+## Installation
 
 Already have this locally?
 ```bash

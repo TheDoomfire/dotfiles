@@ -12,6 +12,9 @@ vim.g.mapleader = " "
 -- Replaces so everything after line 8 uses Map
 -- 8,$s/Map/Map/g
 
+-- Some (possibly) sources:
+-- https://www.reddit.com/r/vim/comments/kn0cpp/key_mappings_everyone_uses/
+
 -- =============================================================================
 -- NORMAL MODE MAPPINGS
 -- =============================================================================
@@ -20,8 +23,11 @@ local normal_mode_maps = { -- "n" is the mode
     { "<Esc>",      "<cmd>nohlsearch<CR>" },
     { "<Leader>r",  [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], { desc = "Search and [r]eplace word under cursor" } },
     { "<leader>s",  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and [s]ubstitute word under cursor" } },
+    -- {'<Leader>s', [[:<C-U>%substitute/\</g<Left><Left>]], { silent = false }},
+    {'<Leader>S', [[:<C-U>%substitute/\<<C-R><C-W>\>//g<Left><Left>]], { silent = false, desc="[S]ubstitute word under cursor (global)"}}, -- Like r?
     { "<leader>gf", vim.lsp.buf.format, { desc = "[g]o [f]ormat" } },
     { "<leader>rn", vim.lsp.buf.rename, { desc = "[r]e[n]ame" } },
+    {'<Leader>h', ':nohlsearch<CR>', { silent = true, desc = '[h]old search' }}, -- Can maybe use: vim.cmd.nohlsearch  instead of :nohlsearch
     { "gd", vim.lsp.buf.definition, { desc = "[g]o to [d]efinition" } },
     { "K", vim.lsp.buf.hover, { desc = "[K]now" } },
     --     {"<A-S-Down>", ":m .+1<CR>==", { desc = "Move line down" }},
@@ -78,6 +84,7 @@ local visual_selection_maps = { -- "x" is the mode
     { "<A-Down>",  ":m '>+1<CR>gv=gv", { desc = "Move block down" } },
     { "<A-j>",     ":m '>+1<CR>gv=gv", { desc = "Move block down" } },
     { "<leader>/", 'y/\\V<C-r>"<CR>',  { noremap = true, silent = true } },
+    { '<Leader>s', [[:substitute/\</g<Left><Left>]], { silent = false, desc="[s]ubstitute in selection" }},
 }
 
 -- =============================================================================
