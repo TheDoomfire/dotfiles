@@ -1,12 +1,12 @@
 # from config import *
 
-testing = "Bye World"
-testing = "Bye World"
-testing = "Bye World"
-testing = "Bye World"
-testing = "Bye World"
-testing = "Bye World"
-testing = "Bye World"
+hellothisisr = "Bye World"
+hellothisisr = "Bye World"
+hellothisisr = "Bye World"
+hellothisisr = "Bye World"
+hellothisisr = "Bye World"
+hellothisisr = "Bye World"
+hellothisisr = "Bye World"
 
 def main():
     print("Running main...")
