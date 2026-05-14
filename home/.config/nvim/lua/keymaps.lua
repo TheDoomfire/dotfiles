@@ -18,10 +18,10 @@ vim.g.mapleader = " "
 
 local normal_mode_maps = { -- "n" is the mode
     { "<Esc>",      "<cmd>nohlsearch<CR>" },
-    { "<Leader>r",  [[:%s/\<<C-r><C-w>\>//g<Left><Left>]] },
+    { "<Leader>r",  [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], { desc = "Search and [r]eplace word under cursor" } },
+    { "<leader>s",  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]] },
     { "<leader>gf", vim.lsp.buf.format,                                    {} },
     { "<leader>rn", vim.lsp.buf.rename },
-    { "<leader>s",  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]] },
     { "<leader>rn", vim.lsp.buf.rename,                                    { desc = "LSP Rename" } },
     { "gd",         vim.lsp.buf.definition,                                {} },
     { "K",          vim.lsp.buf.hover,                                     {} },
