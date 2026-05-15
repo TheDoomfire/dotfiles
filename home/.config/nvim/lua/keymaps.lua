@@ -50,9 +50,9 @@ local normal_mode_maps = { -- "n" is the mode
     { "yc", "yygccp", { remap = true, desc = "Duplicate a line and comment out the first line" } },
     { "<C-a>", "ggVG", { desc = "Select all" } },
     -- Buffers
-    {'<leader>bp', ':bprevious<CR>', { desc = 'Buffer [p]revious' }},
-    {'<leader>bn', ':bnext<CR>', { desc = 'Buffer [n]ext' }},
-    {'<leader>bt', '<C-^>', { desc = 'Buffer [t]oggle' }},
+    {'<leader>bp', ':bprevious<CR>', { desc = '[b]uffer [p]revious' }},
+    {'<leader>bn', ':bnext<CR>', { desc = '[b]uffer [n]ext' }},
+    {'<leader>bt', '<C-^>', { desc = '[b]uffer [t]oggle' }},
 }
 
 -- Swap windows with Shift + Arrow Keys

@@ -19,6 +19,7 @@ This is my personal dotfiles repository.
 - Add colors to .md files.
 - Auto import functions you use if its found somewhere else.
 - Add a way to surround a word/line with something. Like " " or whatever.
+- add so I can add something like bash to markdown code blocks
 
 
 ## Installation
