@@ -25,6 +25,8 @@ cd "$DOTFILES_DIR"
 # If there already is a ~/.config/nvim folder, delete it.
 rm -f "$HOME/.config/nvim/lazy-lock.json"
 
+# TODO: Remove all the REAL files. So the correct ones are symlinked?
+
 # DELETES ALL SYMLINKS.
 # stow -D -t ~ home home-docs-vaults
 stow -D -t ~ home

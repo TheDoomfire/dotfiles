@@ -5,10 +5,10 @@ return {
 		local config = require("nvim-treesitter.configs")
 		config.setup({
 			ensure_installed = {
+                "vim",
+                "lua",
 				"html",
 				"jinja",
-				"lua",
-				"vim",
 				"vimdoc",
 				"markdown",
 				"markdown_inline",
@@ -18,9 +18,18 @@ return {
 			auto_install = true,
 			highlight = {
 				enable = true,
-				-- disable = { "markdown", "markdown_inline" },
+                -- disable = { "markdown", "markdown_inline" },
+                additional_vim_regex_highlighting = { "markdown" },
+                -- disable = function(lang, buf)
+                --     return false  -- highlight all
+                -- end,
 			},
 			indent = { enable = true },
+            -- injections = {
+            --     markdown = {
+            --         enable = false,
+            --     },
+            -- },
 		})
 	end,
 }

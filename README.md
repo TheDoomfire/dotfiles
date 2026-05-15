@@ -21,6 +21,8 @@ This is my personal dotfiles repository.
 - Add a way to surround a word/line with something. Like " " or whatever.
 - add so I can add something like bash to markdown code blocks
 
+#### Snippets
+
 
 ## Installation
 

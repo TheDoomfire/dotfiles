@@ -54,7 +54,9 @@ action = ":SessionSearch<CR>"
 				{ section = "startup" },
 			},
 		},
-		indent = { enabled = true },
+		-- indent = { enabled = true },
+		indent = { enabled = false },
+        -- indent = { enabled = true, scope = { enabled = false } },
 	},
 }
 

@@ -23,6 +23,10 @@ local config_templates = {
   -- js = "js_config.tpl",
 }
 
+-- TODO: Add custom templates
+-- dotignore.tpl -> .ignore
+-- README.md.tpl -> README.md
+
 -- Extract keys and turn them into patterns
 local function get_patterns(t1, t2)
   local patterns = {}

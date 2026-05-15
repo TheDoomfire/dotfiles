@@ -1,12 +1,12 @@
 # from config import *
 
-ksjjee = "Bye World"
-ksjjee = "Bye World"
-ksjjee = "Bye World"
-ksjjee = "Bye World"
-ksjjee = "Bye World"
-ksjjee = "Bye World"
-ksjjee = "Bye World"
+test = "Bye World"
+test = "Bye World"
+test = "Bye World"
+test = "Bye World"
+test = "Bye World"
+test = "Bye World"
+test = "Bye World"
 
 def main():
     print("Running main...")
