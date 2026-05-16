@@ -76,7 +76,10 @@ return {
 					},
 					python = {
 						analysis = {
-							ignore = { "*" },
+							-- ignore = { "*" },
+							-- "workspace" or "openFilesOnly". Workspace enables cross-file indexing for auto-imports.
+							indexingMode = "workspace",
+							autoImportCompletions = true, -- Enables auto-imports in the completion menu
 						},
 					},
 				},
@@ -125,7 +128,6 @@ return {
 			-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			-- vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 			-- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })
-
 		end,
 	},
 }
