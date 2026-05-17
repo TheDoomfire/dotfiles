@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/Cheat Sheets.md",
+                "file": "notes/Software.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Cheat Sheets"
+              "title": "Software"
             }
           }
         ],
@@ -123,7 +123,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/Cheat Sheets.md",
+                "file": "notes/Software.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +133,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Cheat Sheets"
+              "title": "Backlinks for Software"
             }
           },
           {
@@ -214,6 +214,8 @@
   },
   "active": "0778e5c80777b267",
   "lastOpenFiles": [
+    "notes/Cheat Sheets.md",
+    "notes/ideas/projects/Cheat Sheet.md",
     "notes/Devices.md",
     "notes/Food.md",
     "notes/Fordon.md",
@@ -228,7 +230,6 @@
     "notes/Web Development/Python Starter Template.md",
     "notes/ideas/Video Generating.md",
     "notes/Web Development/Website Template.md",
-    "notes/Cheat Sheets.md",
     "notes/TODO/Today.md",
     "notes/Web Development/Live/Websites.md",
     "notes/Web Development/Live/Choose Investing/Ideas.md",
@@ -243,7 +244,6 @@
     "notes/Web Development/Live/Choose Investing",
     "notes/Web Development/Live",
     "ChooseInvesting",
-    "Reward.md",
     "notes/ideas/projects/DIYEmma",
     "notes/TODO",
     "notes/Web Development",
