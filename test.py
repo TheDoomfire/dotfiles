@@ -1,12 +1,12 @@
 # from config import *
 
-test = "Bye World"
-test = "Bye World"
-test = "Bye World"
-test = "Bye World"
-test = "Bye World"
-test = "Bye World"
-test = "Bye World"
+newvariable = "Bye World"
+newvariable = "Bye World"
+newvariable = "Bye World"
+newvariable = "Bye World"
+newvariable = "Bye World"
+newvariable = "Bye World"
+newvariable = "Bye World"
 
 def main():
     print("Running main...")

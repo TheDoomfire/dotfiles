@@ -330,6 +330,18 @@ tmux() {
     fi
 }
 
+va() {
+    if [ -f .venv/bin/activate ]; then
+        source .venv/bin/activate
+    elif [ -f venv/bin/activate ]; then
+        source venv/bin/activate
+    elif [ -f env/bin/activate ]; then
+        source env/bin/activate
+    else
+        echo "No virtual environment (.venv, venv, or env) found in this directory."
+    fi
+}
+
 # Installs .EXE file in Bottles
 winexec() {
     if [ $# -eq 0 ]; then

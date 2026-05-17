@@ -1,11 +1,13 @@
+local K = require("util.keymap")
 -- Instead of using vim.keymap.set, use this function to set the leader key
-function Map(mode, lhs, rhs, opts)
-    local options = { noremap = true, silent = true }
-    if opts then
-        options = vim.tbl_extend("force", options, opts)
-    end
-    vim.keymap.set(mode, lhs, rhs, options)
-end
+
+-- function K.Map(mode, lhs, rhs, opts)
+--     local options = { noremap = true, silent = true }
+--     if opts then
+--         options = vim.tbl_extend("force", options, opts)
+--     end
+--     vim.keymap.set(mode, lhs, rhs, options)
+-- end
 
 vim.g.mapleader = " "
 
@@ -21,12 +23,27 @@ vim.g.mapleader = " "
 
 local normal_mode_maps = { -- "n" is the mode
     { "<Esc>",      "<cmd>nohlsearch<CR>" },
-    { "<Leader>r",  [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], { desc = "Search and [r]eplace word under cursor" } },
-    { "<leader>s",  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and [s]ubstitute word under cursor" } },
+    -- { "<Leader>r",  [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], { desc = "Search and [r]eplace word under cursor" } },
+    -- { "<Leader>r",  vim.lsp.buf.rename, { desc = "Search and [r]eplace word under cursor" } },
+    -- { "<leader>s",  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and [s]ubstitute word under cursor" } },
     -- {'<Leader>s', [[:<C-U>%substitute/\</g<Left><Left>]], { silent = false }},
+    {
+        "<Leader>r",
+        function()
+            return ":IncRename " .. vim.fn.expand("<cword>") .. vim.api.nvim_replace_termcodes("<C-w>", true, true, true)
+        end,
+        { expr = true, desc = "LSP instant [r]ename" },
+    },
+    {
+        "<Leader>s",
+        function()
+            -- This passes the word, leaving the command open at the very end
+            return ":IncRename " .. vim.fn.expand("<cword>")
+        end,
+        { expr = true, desc = "LSP append [s]uffix to word" },
+    },
     {'<Leader>S', [[:<C-U>%substitute/\<<C-R><C-W>\>//g<Left><Left>]], { silent = false, desc="[S]ubstitute word under cursor (global)"}}, -- Like r?
     { "<leader>gf", vim.lsp.buf.format, { desc = "[g]o [f]ormat" } },
-    { "<leader>rn", vim.lsp.buf.rename, { desc = "[r]e[n]ame" } },
     {'<Leader>h', ':nohlsearch<CR>', { silent = true, desc = '[h]old search' }}, -- Can maybe use: vim.cmd.nohlsearch  instead of :nohlsearch
     { "gd", vim.lsp.buf.definition, { desc = "[g]o to [d]efinition" } },
     { "K", vim.lsp.buf.hover, { desc = "[K]now" } },
@@ -62,7 +79,7 @@ vim.api.nvim_set_keymap("n", "<S-Right>", "<C-w>L", { noremap = true, silent = t
 vim.api.nvim_set_keymap("n", "<S-Down>", "<C-w>J", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Up>", "<C-w>K", { noremap = true, silent = true })
 
-Map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+K.map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 
 -- =============================================================================
 -- VISUAL MODE MAPPINGS
@@ -124,8 +141,10 @@ local all_maps = {
     t = terminal_maps,
 }
 
-for mode, mappings in pairs(all_maps) do
-    for _, m in ipairs(mappings) do
-        Map(mode, m[1], m[2], m[3])
-    end
-end
+K.bulk_map(all_maps)
+
+-- for mode, mappings in pairs(all_maps) do
+--     for _, m in ipairs(mappings) do
+--         K.map(mode, m[1], m[2], m[3])
+--     end
+-- end
