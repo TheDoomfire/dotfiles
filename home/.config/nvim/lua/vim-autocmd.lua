@@ -9,13 +9,14 @@ local template_dir = os.getenv("HOME") .. "/.config/nvim/templates/"
 
 -- TODO: Add more templates
 local templates = {
-  py = "python.tpl",
-  -- js = "javascript.tpl",
-  -- html = "html.tpl",
-  astro = "astro.tpl",
-  md = "markdown.tpl",
-  -- njk = "nunjucks.tpl",
-  sh = "bash.tpl",
+    py = "python.tpl",
+    -- js = "javascript.tpl",
+    -- html = "html.tpl",
+    astro = "astro.tpl",
+    md = "markdown.tpl",
+    -- njk = "nunjucks.tpl",
+    sh = "bash.tpl",
+    lua = "lua.tpl",
 }
 
 local config_templates = {
