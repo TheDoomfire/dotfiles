@@ -25,6 +25,9 @@ end
 
 -- These are all just test snippets to get started.
 
+-- NOTE: Ideas:
+-- https://github.com/rafamadriz/friendly-snippets/tree/main/snippets
+
 return {
 	-----------------------------------------------------------------------------
 	-- 1. Date & Time Snippets (Dynamic)

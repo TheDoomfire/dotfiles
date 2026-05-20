@@ -6,6 +6,8 @@ local i = ls.insert_node -- Interactive Jump Point
 
 -- These are all just test snippets to get started.
 
+-- TODO: Add the snippet names to the config file. So I can reuse them in other languages.
+
 return {
 	-- 1. Standard Iteration Loop
 	-- Trigger: fori -> for item in iterable:
@@ -43,4 +45,40 @@ return {
 		t({ "):", "    " }),
 		i(0),
 	}),
+
+    s("pr", {
+        t('print("'),   -- Opens the print statement and the first quote
+        i(1),           -- The cursor lands here first so you can type inside the quotes
+        t('")'),        -- Closes the quote and parentheses
+        i(0),           -- The final exit point when you press Tab again
+    }),
+
+    s("fun", {
+        t("def "),                          -- The definition keyword
+        i(1, "function_name"),              -- 1st jump: Highlights this placeholder name
+        t("("),                             -- Opens parentheses
+        i(2),                               -- 2nd jump: Drops cursor inside the () for arguments
+        t("):"),                            -- Closes parentheses and adds the colon
+        t({ "", "    " }),                  -- Creates a new line and indents 4 spaces
+        i(0, "pass"),                       -- Final jump: Overwrites "pass" when you start coding
+    }),
+
+
+    s("afun", {
+        t("async def "),                          -- The definition keyword
+        i(1, "function_name"),              -- 1st jump: Highlights this placeholder name
+        t("("),                             -- Opens parentheses
+        i(2),                               -- 2nd jump: Drops cursor inside the () for arguments
+        t("):"),                            -- Closes parentheses and adds the colon
+        t({ "", "    " }),                  -- Creates a new line and indents 4 spaces
+        i(0, "pass"),                       -- Final jump: Overwrites "pass" when you start coding
+    }),
+
+    s("if", {
+        t("if "),                           -- Starts the statement
+        i(1, "condition"),                  -- 1st jump: Highlights "condition"
+        t(":"),                             -- Adds the colon
+        t({ "", "    " }),                  -- Drops down a line and inserts 4 spaces
+        i(0, "pass"),                       -- Final jump: Highlights "pass" so it wipes when you type
+    }),
 }
