@@ -7,6 +7,7 @@ M.tools = {
 		"stylelint_lsp",
 		"stylelint-language-server",
 		"ruff",
+        "basedpyright",
 		"html",
 		"lua_ls",
 		"ts_ls",

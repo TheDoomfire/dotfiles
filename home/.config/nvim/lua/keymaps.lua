@@ -79,7 +79,23 @@ vim.api.nvim_set_keymap("n", "<S-Right>", "<C-w>L", { noremap = true, silent = t
 vim.api.nvim_set_keymap("n", "<S-Down>", "<C-w>J", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Up>", "<C-w>K", { noremap = true, silent = true })
 
-K.map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+K.map("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover Documentation" })
+K.map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Actions" })
+K.map("v", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Visual Code Actions" })
+-- K.map({ "v", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+
+
+
+-- vim.keymap.set("v", "<leader>ca", function()
+--     local start_mark = vim.api.nvim_buf_get_mark(0, "<")
+--     local end_mark = vim.api.nvim_buf_get_mark(0, ">")
+--     vim.lsp.buf.code_action({
+--         range = {
+--             start = { line = start_mark[1] - 1, character = start_mark[2] },
+--             ["end"] = { line = end_mark[1] - 1, character = end_mark[2] + 1 },
+--         },
+--     })
+-- end, { desc = "Code action (range)" })
 
 -- =============================================================================
 -- VISUAL MODE MAPPINGS

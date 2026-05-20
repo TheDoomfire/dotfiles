@@ -10,6 +10,7 @@ return {
 	},
 	config = function()
 		require("obsidian").setup({
+            new_notes_location = "current_dir",
 			workspaces = {
 				{
 					name = "notes",
@@ -26,7 +27,6 @@ return {
 				-- Where to put new notes. Valid options are
 				--  * "current_dir" - put new notes in same directory as the current buffer.
 				--  * "notes_subdir" - put new notes in the default notes subdirectory.
-				new_notes_location = "current_dir",
 			},
 		})
 	end,

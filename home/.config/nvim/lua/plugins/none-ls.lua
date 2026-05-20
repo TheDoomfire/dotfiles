@@ -12,7 +12,7 @@ return {
       sources = {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.prettier,
-        require("none-ls.formatting.ruff"),
+        -- require("none-ls.formatting.ruff"),
         --null_ls.builtins.formatting.djlint,
 
         null_ls.builtins.diagnostics.stylelint.with({
@@ -31,7 +31,7 @@ return {
         }),
 
         -- DIAGNOSTICS
-        require("none-ls.diagnostics.eslint_d"),
+        -- require("none-ls.diagnostics.eslint_d"),
         require("none-ls.diagnostics.ruff"),
 
         -- CODE ACTIONS
@@ -59,22 +59,15 @@ return {
           })
         end
 
-        -- Code actions
-        vim.keymap.set(
-          "n",
-          "<leader>ca",
-          vim.lsp.buf.code_action,
-          { buffer = bufnr, desc = "Code actions" } -- buffer = bufnr makes it buffer-local
-        )
         vim.keymap.set("n", "<leader>af", function()
           vim.lsp.buf.code_action({ apply = true }) -- Auto-apply first fix
         end, { buffer = bufnr, desc = "Auto-fix" })
 
-        -- Hover keymap (standard Neovim LSP binding)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, {
-          buffer = bufnr, -- Buffer-local
-          desc = "Show hover documentation/actions",
-        })
+        -- -- Hover keymap (standard Neovim LSP binding)
+        -- vim.keymap.set("n", "K", vim.lsp.buf.hover, {
+        --   buffer = bufnr, -- Buffer-local
+        --   desc = "Show hover documentation/actions",
+        -- })
 
       end,
       debug = true,

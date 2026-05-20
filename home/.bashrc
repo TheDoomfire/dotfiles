@@ -408,6 +408,7 @@ alias home='cd ~'
 alias c='clear'
 alias cls='clear'
 alias sv='source .venv/bin/activate'
+alias pipfreeze='source pip freeze > requirements.txt'
 
 # TODO: add first? Not being used?
 export EDITOR='nvim'

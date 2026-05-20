@@ -15,6 +15,9 @@ vim.cmd("set smarttab")
 vim.cmd("set encoding=UTF-8")
 vim.cmd("set clipboard=unnamedplus")
 
+-- Disable treesitter conceal globally
+vim.opt.conceallevel = 0
+
 -- vim.opt.showtabline = 2 -- Always show tabline
 -- -- Show line numbers in the tabline
 -- vim.o.tabline = "%!v:lua.require'util'.tabline()"

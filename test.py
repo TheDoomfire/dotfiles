@@ -1,4 +1,5 @@
 # from config import *
+import os  # noqa: F401
 
 newvariable = "Bye World"
 newvariable = "Bye World"
