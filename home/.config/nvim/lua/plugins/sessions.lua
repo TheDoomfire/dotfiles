@@ -5,6 +5,9 @@ return {
     local auto_session = require("auto-session")
 
     auto_session.setup({
+    -- Enable auto saving and restoring at the root level
+      auto_save_enabled = true,
+      auto_restore_enabled = true,
       suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
       session_lens = {
         load_on_setup = true, -- Initialize on startup (requires Telescope)
@@ -14,6 +17,14 @@ return {
         previewer = false, -- File preview for session picker
 -- auto_restore_last_session = false, -- On startup, loads the last saved session if session for cwd does not exist
       },
+    })
+    -- Force Neovim to recalculate its screen size after auto-session loads
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "AutoSessionRestored",
+      callback = function()
+        -- vim.cmd("normal! zR") -- Optional: Open all folds
+        vim.cmd("redraw!")    -- Force a complete screen redraw
+      end,
     })
 
      -- -- List Sessions - Shows all the sessions.
