@@ -27,24 +27,14 @@ rm -f "$HOME/.config/nvim/lazy-lock.json"
 
 # TODO: Remove all the REAL files. So the correct ones are symlinked?
 
-# DELETES ALL SYMLINKS.
-# stow -D -t ~ home home-docs-vaults
-stow -D -t ~ home
-stow -D -t ~/Documents/Vaults obsidian-config
-sudo stow -t / -D system
-
 # Symlinks all files.
-stow -v -t ~ home
+# -R = Restow, it deletes the existing symlink and replaces it with the new one.
+stow -v -R -t ~ home
 stow -v -R -t ~/Documents/Vaults obsidian-config
-sudo stow -v -t / system
-# stow -v -R --adopt -t ~ home # Adopt the existing folder
+sudo stow -v -R -t / system
 
 # Heavy files
 stow -vt "$HOME" -d "$(dirname "$SYMLINKS_PATH")" "$(basename "$SYMLINKS_PATH")"
-
-# Reastow example:
-# stow -R -t ~ symlinks
-
 
 # ----- Set up flatpak overrides -----
 # Some apps bitch a bit about permissions for another drive.

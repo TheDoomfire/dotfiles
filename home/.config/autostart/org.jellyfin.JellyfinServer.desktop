@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Jellyfin Server
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 org.jellyfin.JellyfinServer
+Type=Application
+Icon=org.jellyfin.JellyfinServer
+Categories=AudioVideo;
+X-Flatpak=org.jellyfin.JellyfinServer
+X-GNOME-Autostart-enabled=false
+NoDisplay=false
+Hidden=false
+Name[en_GB]=Jellyfin Server
+Comment[en_GB]=No description
+X-GNOME-Autostart-Delay=25

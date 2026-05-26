@@ -2,15 +2,22 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Sources:
+# https://gist.github.com/zachbrowne/8bc414c9f30192067831fafebd14255c 
+
 # MAIN TODO:
 #   - Split into multiple files
-#   - Variables file. For a central place to store variables.
+#   - ALias file.
+#   - Variables file.
 #   - Utils echo with colors.
 #   - Default help popup. So I can remember all the custom commands.
 
 # ------ Variables ------
 export GITHUB_USERNAME="TheDoomfire"
-export GITHUB_DEFAULT_REPO_FOLDER="~/Documents/GitHub"
+export PROJECTS_DIR="~/Documents/GitHub"
+
+# ------ Imports ------
+source ~/.local/bin/newproject.sh
 
 # ------ Utils ------
 
@@ -296,8 +303,6 @@ distroupdate() {
   # sudo apt remove mintupgrade
 }
 
-
-
 reloading() {
   # Asks for the password upfront if the timestamp has expired
   sudo -v
@@ -307,7 +312,6 @@ reloading() {
   sudo keyd reload
   cprint success "Finished reloading!"
 }
-
 
 # Create a combined audio sink. Check sound and enable it.
 combinedaudio() {
@@ -340,6 +344,78 @@ va() {
     else
         echo "No virtual environment (.venv, venv, or env) found in this directory."
     fi
+}
+
+# Show the current distribution
+distribution ()
+{
+	local dtype
+	# Assume unknown
+	dtype="unknown"
+	
+	# First test against Fedora / RHEL / CentOS / generic Redhat derivative
+	if [ -r /etc/rc.d/init.d/functions ]; then
+		source /etc/rc.d/init.d/functions
+		[ zz`type -t passed 2>/dev/null` == "zzfunction" ] && dtype="redhat"
+	
+	# Then test against SUSE (must be after Redhat,
+	# I've seen rc.status on Ubuntu I think? TODO: Recheck that)
+	elif [ -r /etc/rc.status ]; then
+		source /etc/rc.status
+		[ zz`type -t rc_reset 2>/dev/null` == "zzfunction" ] && dtype="suse"
+	
+	# Then test against Debian, Ubuntu and friends
+	elif [ -r /lib/lsb/init-functions ]; then
+		source /lib/lsb/init-functions
+		[ zz`type -t log_begin_msg 2>/dev/null` == "zzfunction" ] && dtype="debian"
+	
+	# Then test against Gentoo
+	elif [ -r /etc/init.d/functions.sh ]; then
+		source /etc/init.d/functions.sh
+		[ zz`type -t ebegin 2>/dev/null` == "zzfunction" ] && dtype="gentoo"
+	
+	# For Mandriva we currently just test if /etc/mandriva-release exists
+	# and isn't empty (TODO: Find a better way :)
+	elif [ -s /etc/mandriva-release ]; then
+		dtype="mandriva"
+
+	# For Slackware we currently just test if /etc/slackware-version exists
+	elif [ -s /etc/slackware-version ]; then
+		dtype="slackware"
+
+	fi
+	echo $dtype
+}
+
+ver() {
+	local dtype
+	dtype=$(distribution)
+
+	if [ $dtype == "redhat" ]; then
+		if [ -s /etc/redhat-release ]; then
+			cat /etc/redhat-release && uname -a
+		else
+			cat /etc/issue && uname -a
+		fi
+	elif [ $dtype == "suse" ]; then
+		cat /etc/SuSE-release
+	elif [ $dtype == "debian" ]; then
+		lsb_release -a
+		# sudo cat /etc/issue && sudo cat /etc/issue.net && sudo cat /etc/lsb_release && sudo cat /etc/os-release # Linux Mint option 2
+	elif [ $dtype == "gentoo" ]; then
+		cat /etc/gentoo-release
+	elif [ $dtype == "mandriva" ]; then
+		cat /etc/mandriva-release
+	elif [ $dtype == "slackware" ]; then
+		cat /etc/slackware-version
+	else
+		if [ -s /etc/issue ]; then
+			cat /etc/issue
+		else
+			echo "Error: Unknown distribution"
+			exit 1
+		fi
+	fi
 }
 
 # Installs .EXE file in Bottles

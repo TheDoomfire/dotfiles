@@ -1,0 +1,17 @@
+# /home/albin/.config/tmuxinator/python-dev.yml
+
+name: python-dev
+root: <%= @args || '.' %>
+
+pre_window: echo "Starting Python Environment..."
+
+windows:
+  - code:
+      layout: main-horizontal
+      options:
+        main-pane-height: 75
+      panes:
+        # 1. Opens your editor in the project directory
+        - nvim .              # (Or 'code .', 'nano', etc.)
+        # 2. Checks if a venv exists in this folder; if so, activates it automatically
+        - if [ -d "venv" ]; then source venv/bin/activate; fi; clear
