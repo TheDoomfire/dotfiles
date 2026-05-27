@@ -12,9 +12,19 @@
 #   - Utils echo with colors.
 #   - Default help popup. So I can remember all the custom commands.
 
+# Exit immediately if a command exits with a non-zero status
+# set -e
+
+# ENV_FILE="$HOME/.config/env.sh"
+# if [ -f "$ENV_FILE" ]; then
+#     source "$ENV_FILE"
+# else
+#     echo "Error: Central env file not found at $ENV_FILE" >&2
+#     exit 1
+# fi
+
 # ------ Variables ------
-export GITHUB_USERNAME="TheDoomfire"
-export PROJECTS_DIR="~/Documents/GitHub"
+# Find the variables in ~/.profile
 
 # ------ Imports ------
 source ~/.local/bin/newproject.sh

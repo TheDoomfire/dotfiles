@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# BASE_DIR="$HOME/Documents/projects"
-BASE_DIR="$HOME/Documents/GitHub"
-
 # TODO:
 # - Create the directory
 # - Fork a template repo
@@ -24,7 +21,7 @@ newproject() {
 
     # Sanitize the project name (lowercase, replace spaces with dashes)
     PROJ_NAME=$(echo "$PROJ_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-    TARGET_DIR="$BASE_DIR/$PROJ_NAME"
+    TARGET_DIR="$PROJECTS_DIR/$PROJ_NAME"
 
     # Check if directory already exists
     if [ -d "$TARGET_DIR" ]; then
@@ -35,13 +32,17 @@ newproject() {
     case $CHOICE in
         1)
             echo "Creating Standard..."
+
             mkdir -p "$TARGET_DIR"
-            cd "$TARGET_DIR"
-            git init -b main
-            echo "# $PROJ_NAME" > README.md
-            git add README.md
-            git commit -m "Initial commit"
-            gh repo create "$PROJ_NAME" --public --source=. --remote=origin --push
+            echo "# $PROJ_NAME" > "$TARGET_DIR/README.md"
+
+            git init -b main "$TARGET_DIR"
+            git -C "$TARGET_DIR" add README.md
+            git -C "$TARGET_DIR" commit -m "Initial commit"
+            
+            # gh repo create "$PROJ_NAME" --public --source="$TARGET_DIR" --remote=origin --push
+            git -C "$TARGET_DIR" remote add origin "git@github.com:$GITHUB_USERNAME/$REPO_NAME.git"
+            git -C "$TARGET_DIR" push -u origin main
 
             SESSION_NAME=$(echo "$PROJ_NAME" | tr '.:' '_')
 
