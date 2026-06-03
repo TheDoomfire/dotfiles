@@ -47,38 +47,60 @@ _install_from_file() {
     fi
 }
 
-# # FIXME: Is linux mint not supported by docker?
-# # Docker: https://docs.docker.com/engine/install/debian/#uninstall-old-versions
-# _setup_docker() {
-#     echo "Uninstalling old versions of Docker..."
-#     echo "apt might report that you have none of these packages installed."
-#     sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-doc podman-docker containerd runc | cut -f1)
-#
-#     # sudo apt update
-#
-#     # Install prerequisites quietly
-#     sudo apt install ca-certificates curl
-#
-#     # Create the keyrings directory securely
-#     sudo install -m 0755 -d /etc/apt/keyrings
-#
-#
-#     # Download GPG key (Overwrite if it exists to keep it fresh)
-#     sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-#     sudo chmod a+r /etc/apt/keyrings/docker.asc
-#
-#     # Add the repository to Apt sources:
-#     sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
-#     Types: deb
-#     URIs: https://download.docker.com/linux/debian
-#     Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
-#     Components: stable
-#     Architectures: $(dpkg --print-architecture)
-#     Signed-By: /etc/apt/keyrings/docker.asc
-#     EOF
-#
-#     sudo apt update
-# }
+# FIXME: Is linux mint not supported by docker?
+# Docker: https://docs.docker.com/engine/install/debian/#uninstall-old-versions
+# Maybe usthis: https://linuxiac.com/how-to-install-docker-on-linux-mint-22/
+_setup_docker() {
+    echo "Uninstalling old versions of Docker..."
+    echo "apt might report that you have none of these packages installed."
+    sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-doc podman-docker containerd runc | cut -f1)
+
+    # sudo apt update
+
+    # Install prerequisites quietly
+    sudo apt install ca-certificates curl
+    # or use this?
+    # sudo apt install apt-transport-https ca-certificates curl gnupg
+
+    # Create the keyrings directory securely
+    sudo install -m 0755 -d /etc/apt/keyrings
+
+
+    # Download GPG key (Overwrite if it exists to keep it fresh)
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # or use this?
+    # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker.gpg
+
+    # # Add the repository to Apt sources:
+    # sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+    # Types: deb
+    # URIs: https://download.docker.com/linux/debian
+    # Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+    # Components: stable
+    # Architectures: $(dpkg --print-architecture)
+    # Signed-By: /etc/apt/keyrings/docker.asc
+    # EOF
+
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu noble stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    sudo apt update
+
+    # Install the latest version
+    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    # Check if docker is running
+    sudo systemctl status docker
+    # sudo systemctl is-active docker
+
+    # If it is not running, start it
+    # sudo systemctl start docker
+
+    # Verify that the installation is successful by running the hello-world image:
+    sudo docker run hello-world
+
+}
 
 
 # ========================================================
