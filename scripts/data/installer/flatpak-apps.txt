@@ -1,0 +1,15 @@
+# TODO: Add flatpak apps here.
+# Search for apps with:
+# flatpak search org.qbittorrent.qBittorrent
+# List apps with:
+# flatpak list --app
+
+# --- Browsers ---
+org.mozilla.firefox
+com.brave.Browser
+
+org.qbittorrent.qBittorrent
+org.jellyfin.JellyfinServer
+
+# --- Chat & Communication ---
+com.discordapp.Discord

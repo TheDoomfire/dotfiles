@@ -1,0 +1,13 @@
+ # TODO: Add apts apps here.
+ # Check for apps with:
+ # apt search <app-name>
+ # apt-cache policy <app-name>
+ # List apps with:
+ # apt list --installed
+
+# --- Development ---
+git
+
+# --- Unsorted ---
+ca-certificates
+curl

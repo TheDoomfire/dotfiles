@@ -2,6 +2,7 @@
 
 # Imports
 source ./scripts/permissions.sh
+# source ./scripts/install-apps.sh
 
 # Variables
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -12,6 +13,9 @@ SYMLINKS_APPS_PATH="$SYMLINKS_PATH/.var/app"
 
 # Incase it's run outside of this directory.
 cd "$DOTFILES_DIR"
+
+# Install all apps.
+./scripts/install-apps.sh
 
 # TODO: Check if stow is installed. 
 # If not, install it. Flatpak first then apt.
