@@ -230,6 +230,7 @@ ga() {
   local message="${1:-misc}"
   git add . && git commit -m "$message" && git push
 }
+export -f ga
 
 # gitpull() {
 gp() {
@@ -240,6 +241,7 @@ gp() {
     # Have this instead of git pull?
     # git merge @{u}    # Merge upstream branch (same as pull without fetch)
 }
+export -f gp
 
 # TODO: Run at startup? With backup.
 # TODO: TEST!
