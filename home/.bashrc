@@ -6,7 +6,7 @@
 # https://gist.github.com/zachbrowne/8bc414c9f30192067831fafebd14255c 
 
 # MAIN TODO:
-#   - Split into multiple files
+#   - Split into multiple files. Inside of: ~/.config/shell/
 #   - ALias file.
 #   - Variables file.
 #   - Utils echo with colors.
@@ -23,11 +23,17 @@
 #     exit 1
 # fi
 
+
 # ------ Variables ------
 # Find the variables in ~/.profile
 
 # ------ Imports ------
 source ~/.local/bin/newproject.sh
+
+# Load shared shell aliases
+if [ -f "$HOME/.config/shell/aliases.sh" ]; then
+    . "$HOME/.config/shell/aliases.sh"
+fi
 
 # ------ Utils ------
 
@@ -146,20 +152,6 @@ fi
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -430,6 +422,41 @@ ver() {
 	fi
 }
 
+
+# FIXME: Use this for my installation script.
+# TODO: Make it work with android?
+check_device() {
+    local chassis
+    chassis=$(hostnamectl | grep "Chassis:" | awk '{print $2}')
+
+    if [ "$chassis" = "laptop" ]; then
+        echo "💻 Laptop detected!"
+        
+    elif [ "$chassis" = "desktop" ]; then
+        echo "🖥️ Desktop detected!"
+        
+    else
+        echo "Device type is: $chassis"
+    fi
+}
+
+# Backups file or directory
+bak() {
+    local file="$1"
+    cp -r "$file" "${file}.$(date +%Y%m%d).bak"
+    echo "Backup created: ${file}.$(date +%Y%m%d).bak"
+}
+
+# Find the largest file in  current directory
+duck() {
+    du -cks * | sort -rn | head -n 11
+}
+
+# Find a file with a pattern in name:
+function ff() { find $(pwd -P) -type f -iname '*'$*'*' -ls ; }
+# Find a directory with a pattern in name:
+function fd() { find $(pwd -P) -type d -iname '*'$*'*' -ls ; }
+
 # Installs .EXE file in Bottles
 winexec() {
     if [ $# -eq 0 ]; then
@@ -482,23 +509,7 @@ friend() {
   cprint highlight "This is a highlight message"
 }
 
-# Custom aliases
-# alias mux=tmuxinator
-alias mux=tmuxifier
-alias tload="tmuxifier load-session"
-alias gs='git status'
-# alias reload='source ~/.bashrc' 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias ~='cd ~'
-alias home='cd ~'
-alias c='clear'
-alias cls='clear'
-alias sv='source .venv/bin/activate'
-alias pipfreeze='source pip freeze > requirements.txt'
 
-# TODO: add first? Not being used?
 export EDITOR='nvim'
 # So I can use sudoedit
 export SUDO_EDITOR='nvim'

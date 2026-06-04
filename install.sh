@@ -14,20 +14,17 @@ SYMLINKS_APPS_PATH="$SYMLINKS_PATH/.var/app"
 # Incase it's run outside of this directory.
 cd "$DOTFILES_DIR"
 
-# Install all apps.
-./scripts/install-apps.sh
-
-# TODO: Check if stow is installed. 
-# If not, install it. Flatpak first then apt.
-
-# TODO: Add all these, so install all apps. 
-# Source: https://github.com/TheDoomfire/bootstrap-os
-
-# TODO: Check if HDD exists, or secondary drive.
-# Else, don't run some of the commands.
-
 # If there already is a ~/.config/nvim folder, delete it.
 rm -f "$HOME/.config/nvim/lazy-lock.json"
+
+# Install all apps.
+# TODO: Add all these, so install all apps. 
+# Source: https://github.com/TheDoomfire/bootstrap-os
+./scripts/install-apps.sh
+
+# TODO: Check the device type and distro.
+# TODO: Find a way to see if it's my main pc.
+# TODO: Check if my HDD with the name of x exists. Then it's my main pc?
 
 # TODO: Remove all the REAL files. So the correct ones are symlinked?
 
