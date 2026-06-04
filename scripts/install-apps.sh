@@ -47,9 +47,9 @@ _install_from_file() {
     fi
 }
 
-# FIXME: Is linux mint not supported by docker?
 # Docker: https://docs.docker.com/engine/install/debian/#uninstall-old-versions
-# Maybe usthis: https://linuxiac.com/how-to-install-docker-on-linux-mint-22/
+# For Linux Mint: https://linuxiac.com/how-to-install-docker-on-linux-mint-22/
+# FIXME: Only works for linux mint.
 _setup_docker() {
     echo "Uninstalling old versions of Docker..."
     echo "apt might report that you have none of these packages installed."
@@ -58,50 +58,35 @@ _setup_docker() {
     # sudo apt update
 
     # Install prerequisites quietly
-    sudo apt install ca-certificates curl
-    # or use this?
-    # sudo apt install apt-transport-https ca-certificates curl gnupg
+    sudo apt install -y apt-transport-https ca-certificates curl gnupg
 
-    # Create the keyrings directory securely
-    sudo install -m 0755 -d /etc/apt/keyrings
+    # Add Docker’s Official GPG Key
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker.gpg
 
-
-    # Download GPG key (Overwrite if it exists to keep it fresh)
-    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-    sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-    # or use this?
-    # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker.gpg
-
-    # # Add the repository to Apt sources:
-    # sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
-    # Types: deb
-    # URIs: https://download.docker.com/linux/debian
-    # Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
-    # Components: stable
-    # Architectures: $(dpkg --print-architecture)
-    # Signed-By: /etc/apt/keyrings/docker.asc
-    # EOF
-
+    # Add Docker Repo to Linux Mint 22
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu noble stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
+    # Jammy is for Mint 21
+    # echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt update
 
     # Install the latest version
-    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    # TODO: Add -y
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     # Check if docker is running
-    sudo systemctl status docker
-    # sudo systemctl is-active docker
+    echo "Checking if docker is running..."
+    echo "Should say 'active'"
+    echo "----------------------------"
+    sudo systemctl is-active docker
+    echo "----------------------------"
 
     # If it is not running, start it
     # sudo systemctl start docker
 
-    # Verify that the installation is successful by running the hello-world image:
+    # Verify Installation
     sudo docker run hello-world
 
 }
-
 
 # ========================================================
 # RUN INSTALLATIONS / TESTS
@@ -112,18 +97,16 @@ sudo apt update && sudo apt upgrade -y
 
 echo "Installing apps..."
 
-# For testing:
-_install_from_file "$APT_LIST" "printf '%s\n'"
-_install_from_file "$FLATPAK_LIST" "printf '%s\n'" 
+# # For testing:
+# _install_from_file "$APT_LIST" "printf '%s\n'"
+# _install_from_file "$FLATPAK_LIST" "printf '%s\n'" 
 
 
-# # For real use:
-# install_from_file "$APT_LIST" "sudo apt install -y"
-# install_from_file "$FLATPAK_LIST" "flatpak install -y flathub" 
+# For real use:
+install_from_file "$APT_LIST" "sudo apt install -y"
+install_from_file "$FLATPAK_LIST" "flatpak install -y flathub" 
 
-
-# FIXME: Is linux mint not supported by docker?
-# _setup_docker
+_setup_docker
 
 echo "Done installing apps."
 
