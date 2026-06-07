@@ -20,6 +20,12 @@ alias myip='curl ifconfig.me; echo ""'
 alias df="df -kTh"
 alias desk="cd ~/Desktop"
 alias down="cd ~/Downloads"
+alias movies="cd /mnt/movies_games/Videos/Movies"
+alias gmovies="open /mnt/movies_games/Videos/Movies"
+alias series="cd /mnt/movies_games/Videos/Series"
+alias gseries="open /mnt/movies_games/Videos/Series"
+alias books="cd /mnt/movies_games/Documents/Books"
+alias gbooks="open /mnt/movies_games/Documents/Books"
 alias bashrc="$EDITOR ~/.bashrc ; reload"
 
 # some more ls aliases
