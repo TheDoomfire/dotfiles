@@ -22,6 +22,11 @@ rm -f "$HOME/.config/nvim/lazy-lock.json"
 # Source: https://github.com/TheDoomfire/bootstrap-os
 ./scripts/install-apps.sh
 
+# Permissions for docker.
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
 # TODO: Check the device type and distro.
 # TODO: Find a way to see if it's my main pc.
 # TODO: Check if my HDD with the name of x exists. Then it's my main pc?
