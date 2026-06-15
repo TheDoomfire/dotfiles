@@ -29,6 +29,7 @@
 
 # ------ Imports ------
 source ~/.local/bin/newproject.sh
+source ~/.local/bin/add_jellyfin_user.sh
 
 # Load shared shell aliases
 if [ -f "$HOME/.config/shell/aliases.sh" ]; then
@@ -186,6 +187,35 @@ tmux-project() {
 }
 
 # ------ Command aliasing ------
+
+# TESTME: Add so it cd's to the directory of the unzipped file.
+extract () {
+    if [ -f $1 ] ; then
+        local dir_before=$(find . -maxdepth 1 -type d)
+        case $1 in
+              *.tar.bz2)     tar xvjf $1    ;;
+              *.tar.gz)      tar xvzf $1    ;;
+              *.tar.xz)      tar xf $1      ;;
+              *.bz2)         bunzip2 $1     ;;
+              *.rar)         rar x $1       ;;
+              *.gz)          gunzip $1      ;;
+              *.tar)         tar xvf $1     ;;
+              *.tbz2)        tar xvjf $1    ;;
+              *.zip)         unzip $1       ;;
+              *.Z)           uncompress $1  ;;
+              *.7z)          7z x $1        ;;
+              *)             echo "don't know how to extract '%1'..."
+        esac
+        local dir_after=$(find . -maxdepth 1 -type d)
+        local new_dir=$(comm -13 <(echo "$dir_before" | sort) <(echo "$dir_after" | sort))
+        if [ $(echo "$new_dir" | wc -l) -eq 1 ] && [ -d "$new_dir" ]; then
+            cd "$new_dir" || return
+        fi
+    else
+      echo "'$1' is not a valid file!"
+    fi
+}
+
 
 # --- Git ---
 # TODO: Test this!
