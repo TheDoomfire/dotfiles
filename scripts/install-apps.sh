@@ -88,6 +88,22 @@ _setup_docker() {
 
 }
 
+
+_setup_proxmox_backup_server() {
+    echo "Installing Proxmox Backup Server..."
+    # Add Proxmox GPG key: Using sudo since I geta  permission issue otherwise
+    sudo wget https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg
+    # Add the PBS client-only repo
+    echo "deb http://download.proxmox.com/debian/pbs-client bullseye main" | sudo tee /etc/apt/sources.list.d/pbs-client.list
+
+    # If a libssl1.1 error is found: Download it manually first:
+    wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+    sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+
+    # The actual installation: If lsubssl1.1 error then run the above code.
+    sudo apt install -y proxmox-backup-server
+}
+
 # ========================================================
 # RUN INSTALLATIONS / TESTS
 # ========================================================
