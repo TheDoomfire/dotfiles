@@ -520,6 +520,40 @@ winexec() {
     flatpak run --command=bottles-cli com.usebottles.bottles run -b "$bottle_name" -e "$new_exe_path"
 }
 
+# SSH 
+keygen_and_connect() {
+    # Check if the minimum required arguments are provided
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Usage: keygen_and_connect <key_name> <ip_address> [comment] [passphrase]"
+        return 1
+    fi
+
+    # Assign arguments to descriptive variables
+    local KEY_NAME="$1"
+    local IP_ADDRESS="$2"
+    local COMMENT="${3:-"Generated on $(date +%F)"}" # Defaults to current date if empty
+    local PASSPHRASE="${4:-""}"                    # Defaults to no passphrase if empty
+
+    local KEY_PATH="$HOME/.ssh/$KEY_NAME"
+
+    echo "🔑 Generating Ed25519 key pair at $KEY_PATH..."
+    
+    # Generate the SSH key
+    ssh-keygen -t ed25519 -C "$COMMENT" -f "$KEY_PATH" -N "$PASSPHRASE"
+
+    if [ $? -eq 0 ]; then
+        echo "🚀 Key generated successfully. Connecting to $IP_ADDRESS..."
+        echo "--------------------------------------------------------"
+        # ssh-copy-id -i "$KEY_PATH.pub" "$IP_ADDRESS"
+        # Connect using the newly created key
+        ssh -i "$KEY_PATH" "$IP_ADDRESS"
+    else
+        echo "❌ Error: Key generation failed."
+        return 1
+    fi
+}
+
+# Games
 minecraft() {
   # TODO: maybe run the server in the background?
   # cd /mnt/movies_games/Servers/Minecraft/EmmasServer

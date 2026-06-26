@@ -31,6 +31,7 @@ alias bashrc="$EDITOR ~/.bashrc ; reload"
 alias sshkeygen="ssh-keygen -t ed25519 -f ~/.ssh/FILENAME -C 'A COMMENT'"
 alias lab-on="docker compose -f /mnt/linux_apps/Documents/GitHub/homelab/media/compose.yaml up -d"
 alias lab-off="docker compose -f /mnt/linux_apps/Documents/GitHub/homelab/media/compose.yaml down"
+alias ssha="eval $(ssh-agent) && ssh-add"
 
 # some more ls aliases
 #alias ll='ls -l'
