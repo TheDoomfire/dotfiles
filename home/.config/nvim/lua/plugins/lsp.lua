@@ -108,6 +108,8 @@ return {
 
             vim.lsp.config("ruff", {})
 
+            vim.lsp.config("yaml-language-server", {})
+
             vim.lsp.enable({
                 "lua_ls",
                 "jinja_lsp",
@@ -118,7 +120,8 @@ return {
                 -- "pyright",
                 "basedpyright",
                 "ruff",
-                "njk"
+                "njk",
+                "yaml-language-server",
             })
 
             vim.filetype.add({

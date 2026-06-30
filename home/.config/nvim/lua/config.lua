@@ -15,6 +15,7 @@ M.tools = {
 		"cssls",
 		"jinja_lsp",
 		"bash-language-server",
+        "yaml-language-server",
 	},
 	-- Linters
 	linter = {

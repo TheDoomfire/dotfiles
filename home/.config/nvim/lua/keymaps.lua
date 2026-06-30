@@ -17,6 +17,56 @@ vim.g.mapleader = " "
 -- Some (possibly) sources:
 -- https://www.reddit.com/r/vim/comments/kn0cpp/key_mappings_everyone_uses/
 
+-- local function smart_rename()
+--     local bufnr = vim.api.nvim_get_current_buf()
+--     local clients = vim.lsp.get_clients({ bufnr = bufnr })
+--
+--     local has_rename = false
+--     for _, client in ipairs(clients) do
+--         if client.supports_method and client:supports_method("textDocument/rename", bufnr) then
+--             has_rename = true
+--             break
+--         end
+--     end
+--
+--     local word = vim.fn.expand("<cword>")
+--
+--     if has_rename then
+--         return ":IncRename " .. word .. vim.api.nvim_replace_termcodes("<C-w>", true, true, true)
+--     else
+--         vim.notify("No LSP rename capability, falling back to :%s", vim.log.levels.WARN)
+--         -- -- build a substitute command pre-filled with the word, cursor left in the replacement slot
+--         -- -- [[:%s/\<<C-r><C-w>\>//g<Left><Left>]],
+--         -- local cmd = ":%s/\\<<C-r>" .. word .. "\\>//g<Left><Left>"
+--         -- -- local cmd = ":%s/\\<" .. word .. "\\>//g"
+--         -- local left = vim.api.nvim_replace_termcodes(string.rep("<Left>", 3), true, true, true)
+--         -- return cmd .. left
+--         local left = vim.api.nvim_replace_termcodes("<Left><Left>", true, true, true)
+--         return ":%s/\\<" .. word .. "\\>//g" .. left
+--     end
+-- end
+
+-- Renames using LSP if available, otherwise falls back to :%s
+local function smart_rename()
+    local bufnr = vim.api.nvim_get_current_buf()
+
+    local clients = vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/rename" })
+    local has_rename = #clients > 0
+
+    local word = vim.fn.expand("<cword>")
+
+    if has_rename then
+        return ":IncRename " .. word .. vim.api.nvim_replace_termcodes("<C-w>", true, true, true)
+    else
+        vim.notify("No LSP rename support, falling back to :%s", vim.log.levels.WARN)
+        return vim.api.nvim_replace_termcodes(":%s/\\<" .. word .. "\\>/", true, false, true)
+    end
+end
+
+        -- function()
+        --     return ":IncRename " .. vim.fn.expand("<cword>") .. vim.api.nvim_replace_termcodes("<C-w>", true, true, true)
+        -- end,
+
 -- =============================================================================
 -- NORMAL MODE MAPPINGS
 -- =============================================================================
@@ -29,9 +79,7 @@ local normal_mode_maps = { -- "n" is the mode
     -- {'<Leader>s', [[:<C-U>%substitute/\</g<Left><Left>]], { silent = false }},
     {
         "<Leader>r",
-        function()
-            return ":IncRename " .. vim.fn.expand("<cword>") .. vim.api.nvim_replace_termcodes("<C-w>", true, true, true)
-        end,
+        smart_rename,
         { expr = true, desc = "LSP instant [r]ename" },
     },
     {
