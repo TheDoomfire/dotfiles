@@ -115,6 +115,7 @@ local normal_mode_maps = { -- "n" is the mode
     { "yc", "yygccp", { remap = true, desc = "Duplicate a line and comment out the first line" } },
     { "<C-a>", "ggVG", { desc = "Select all" } },
     -- Buffers
+    -- {'<leader>i', '`[=`]', { desc = 'Indent last pasted text' }}, -- FIXME: doesn't work
     {'<leader>bp', ':bprevious<CR>', { desc = '[b]uffer [p]revious' }},
     {'<leader>bn', ':bnext<CR>', { desc = '[b]uffer [n]ext' }},
     {'<leader>bt', '<C-^>', { desc = '[b]uffer [t]oggle' }},
