@@ -5,6 +5,20 @@
 # - Fix windows
 # - Make so you can do something like this: "newproject python"
 
+
+declare -Ag git_template
+declare -Ag tmux_template
+
+WEBSITE_NAME="website"
+PYTHON_NAME="python"
+
+git_template[$WEBSITE_NAME]="website-template"
+tmux_template[$WEBSITE_NAME]="website"
+
+git_template[$PYTHON_NAME]="python-template"
+tmux_template[$PYTHON_NAME]="python-template"
+
+
 _init_and_create_repo() {
 
     if [ ! -d "$TARGET_DIR/.git" ]; then
@@ -45,32 +59,50 @@ _generate_repo_from_template() {
 
 
 _create_and_switch_tmux() {
+    local template="$1"
 
     # Create a new detached session and set its starting directory to the project folder
-    tmux new-session -d -s "$SESSION_NAME" -c "$TARGET_DIR"
+    # tmux new-session -d -s "$SESSION_NAME" -c "$TARGET_DIR"
+    
+    # # tmuxp load ~/.tmuxp/"$template".yaml -a project_name="$SESSION_NAME" -a project_path="$TARGET_DIR"
+    # export TMUX_SESSION_NAME="$SESSION_NAME"
+    # export TMUX_PROJECT_PATH="$TARGET_DIR"
 
-    # Double-check that the session actually exists before switching
-    if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-        if [ -n "$TMUX" ]; then
-            # Inside tmux: Switch client, but redirect stderr to keep your terminal clean
-            tmux switch-client -t "$SESSION_NAME"
-        else
-            # Outside tmux: Attach normally
-            tmux attach-session -t "$SESSION_NAME"
-        fi
-    else
-        echo "Error: Failed to create or find tmux session '$SESSION_NAME'."
-        exit 1
-    fi
+    TMUX_SESSION_NAME="$SESSION_NAME" START_DIR="$TARGET_DIR" \
+    tmuxp load ~/.tmuxp/"$template".yaml
+
+    # tmuxp load ~/.tmuxp/$template.yaml
+    # name="$SESSION_NAME" start_dir="$TARGET_DIR" tmuxp load ~/.tmuxp/"$template".yaml
+    # SESSION_NAME="$SESSION_NAME" TARGET_DIR="$TARGET_DIR" tmuxp load ~/.tmuxp/"$template".yaml
+
+
+    # # Double-check that the session actually exists before switching
+    # if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    #     if [ -n "$TMUX" ]; then
+    #         # Inside tmux: Switch client, but redirect stderr to keep your terminal clean
+    #         tmux switch-client -t "$SESSION_NAME"
+    #     else
+    #         # Outside tmux: Attach normally
+    #         tmux attach-session -t "$SESSION_NAME"
+    #     fi
+    # else
+    #     echo "Error: Failed to create or find tmux session '$SESSION_NAME'."
+    #     exit 1
+    # fi
 }
 
 
 _create_from_template() {
     local template="$1"
 
+    git=${git_template[$template]}
+    tmux=${tmux_template[$template]}
+
+    echo "TMUXP: Loading $tmux..."
+
     mkdir -p "$TARGET_DIR"
-    _generate_repo_from_template "$template"
-    _create_and_switch_tmux
+    # _generate_repo_from_template "$template"
+    _create_and_switch_tmux "$tmux"
 }
 
 
@@ -100,16 +132,16 @@ newproject() {
 
     read -p "Does everything look correct? (y/n): " final_confirm
 
-    if [[ ! "$final_confirm" =~ ^[Yy]$ ]]; then
-        echo "❌ Aborting operation. No changes were made."
-        
-        # Check if the script is being sourced or run directly
-        if [ "$0" = "$BASH_SOURCE" ]; then
-            exit 0   # Safe to exit: run directly as a script
-        else
-            return 0 # Safe to return: script was sourced inside an active shell
-        fi
-    fi
+    # if [[ ! "$final_confirm" =~ ^[Yy]$ ]]; then
+    #     echo "❌ Aborting operation. No changes were made."
+    #
+    #     # Check if the script is being sourced or run directly
+    #     if [ "$0" = "$BASH_SOURCE" ]; then
+    #         exit 0   # Safe to exit: run directly as a script
+    #     else
+    #         return 0 # Safe to return: script was sourced inside an active shell
+    #     fi
+    # fi
 
     # Sanitize the project name (lowercase, replace spaces with dashes)
     PROJ_NAME=$(echo "$PROJ_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
@@ -118,11 +150,12 @@ newproject() {
 
     PYTHON_TEMPLATE="python-template"
     WEBSITE_TEMPLATE="website-template"
+    WEBSITE_TMUX_SESSION="webproject"
 
     # Check if directory already exists
     if [ -d "$TARGET_DIR" ]; then
         echo "❌ Error: A project named '$PROJ_NAME' already exists at $TARGET_DIR."
-        exit 1
+        return 1 # exit 1 does turn off the entire terminal
     # else
     #     mkdir -p "$TARGET_DIR"
     fi
@@ -131,22 +164,30 @@ newproject() {
         1)
             echo "Creating Standard..."
 
-            mkdir -p "$TARGET_DIR"
-            echo "# $PROJ_NAME" > "$TARGET_DIR/README.md"
-            _init_and_create_repo
-            _create_and_switch_tmux
 
-            # JUST FOR TESTING
-            open "$TARGET_DIR"
+            # mkdir -p "$TARGET_DIR"
+            # echo "# $PROJ_NAME" > "$TARGET_DIR/README.md"
+            # _init_and_create_repo
+            # _create_and_switch_tmux
+            #
+            # # JUST FOR TESTING
+            # open "$TARGET_DIR"
 
         ;;
         2)
             echo "Creating Python project structure..."
-            _create_from_template "$PYTHON_TEMPLATE"
+            # _create_from_template "$PYTHON_TEMPLATE"
         ;;
         3)
             echo "Creating Web Development project structure..."
-            _create_from_template "$WEBSITE_TEMPLATE"
+
+            # test1=$tmux_template[$WEBSITE_NAME]
+            # echo "TMUXP: Loading $test1..."
+
+            _create_from_template "$WEBSITE_NAME"
+
+            # _create_from_template "$WEBSITE_TEMPLATE"
+
         ;;
         *)
             echo "❌ Invalid choice. Exiting."
