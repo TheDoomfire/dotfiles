@@ -59,7 +59,7 @@ _generate_repo_from_template() {
 
 
 _create_and_switch_tmux() {
-    local template="$1"
+    local template="${1:-"default"}"
 
     # Create a new detached session and set its starting directory to the project folder
     # tmux new-session -d -s "$SESSION_NAME" -c "$TARGET_DIR"
@@ -68,6 +68,8 @@ _create_and_switch_tmux() {
     # export TMUX_SESSION_NAME="$SESSION_NAME"
     # export TMUX_PROJECT_PATH="$TARGET_DIR"
 
+
+    # TODO: If no template is specified, use the default one
     TMUX_SESSION_NAME="$SESSION_NAME" START_DIR="$TARGET_DIR" \
     tmuxp load ~/.tmuxp/"$template".yaml
 
@@ -101,7 +103,8 @@ _create_from_template() {
     echo "TMUXP: Loading $tmux..."
 
     mkdir -p "$TARGET_DIR"
-    # _generate_repo_from_template "$template"
+    _generate_repo_from_template "$git"
+    # TODO: Run some scripts before creating the tmux session. Like "pnpm install" and "uv sync"
     _create_and_switch_tmux "$tmux"
 }
 
@@ -132,25 +135,21 @@ newproject() {
 
     read -p "Does everything look correct? (y/n): " final_confirm
 
-    # if [[ ! "$final_confirm" =~ ^[Yy]$ ]]; then
-    #     echo "❌ Aborting operation. No changes were made."
-    #
-    #     # Check if the script is being sourced or run directly
-    #     if [ "$0" = "$BASH_SOURCE" ]; then
-    #         exit 0   # Safe to exit: run directly as a script
-    #     else
-    #         return 0 # Safe to return: script was sourced inside an active shell
-    #     fi
-    # fi
+    if [[ ! "$final_confirm" =~ ^[Yy]$ ]]; then
+        echo "❌ Aborting operation. No changes were made."
+
+        # Check if the script is being sourced or run directly
+        if [ "$0" = "$BASH_SOURCE" ]; then
+            exit 0   # Safe to exit: run directly as a script
+        else
+            return 0 # Safe to return: script was sourced inside an active shell
+        fi
+    fi
 
     # Sanitize the project name (lowercase, replace spaces with dashes)
     PROJ_NAME=$(echo "$PROJ_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     TARGET_DIR="$PROJECTS_DIR/$PROJ_NAME"
     SESSION_NAME=$(echo "$PROJ_NAME" | tr '.:' '_')
-
-    PYTHON_TEMPLATE="python-template"
-    WEBSITE_TEMPLATE="website-template"
-    WEBSITE_TMUX_SESSION="webproject"
 
     # Check if directory already exists
     if [ -d "$TARGET_DIR" ]; then
@@ -164,34 +163,27 @@ newproject() {
         1)
             echo "Creating Standard..."
 
-
-            # mkdir -p "$TARGET_DIR"
-            # echo "# $PROJ_NAME" > "$TARGET_DIR/README.md"
-            # _init_and_create_repo
-            # _create_and_switch_tmux
-            #
+            mkdir -p "$TARGET_DIR"
+            echo "# $PROJ_NAME" > "$TARGET_DIR/README.md"
+            _init_and_create_repo
+            _create_and_switch_tmux
+            
             # # JUST FOR TESTING
             # open "$TARGET_DIR"
 
         ;;
         2)
             echo "Creating Python project structure..."
-            # _create_from_template "$PYTHON_TEMPLATE"
+            _create_from_template "$PYTHON_NAME"
         ;;
         3)
             echo "Creating Web Development project structure..."
-
-            # test1=$tmux_template[$WEBSITE_NAME]
-            # echo "TMUXP: Loading $test1..."
-
             _create_from_template "$WEBSITE_NAME"
-
-            # _create_from_template "$WEBSITE_TEMPLATE"
 
         ;;
         *)
             echo "❌ Invalid choice. Exiting."
-            exit 1
+            return 1
             ;;
         esac
 }
