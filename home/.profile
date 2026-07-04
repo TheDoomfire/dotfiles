@@ -30,3 +30,4 @@ fi
 # System wide variables. To be used in any .sh file.
 export GITHUB_USERNAME="TheDoomfire"
 export PROJECTS_DIR="$HOME/Documents/GitHub"
+# export GEMINI_API_KEY=""
