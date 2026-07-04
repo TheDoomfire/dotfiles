@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # TODO:
-# - Create tmux windows for each project
-# - Fix windows
 # - Make so you can do something like this: "newproject python"
+# - Add: newpython
+# - Add: newwebsite
 
 
 declare -Ag git_template
@@ -11,12 +11,31 @@ declare -Ag tmux_template
 
 WEBSITE_NAME="website"
 PYTHON_NAME="python"
+DEFAULT_NAME="default"
+
+declare -Ag template_setup_function=(
+    ["$WEBSITE_NAME"]=_setup_website
+    ["$PYTHON_NAME"]=_setup_python_project
+)
 
 git_template[$WEBSITE_NAME]="website-template"
-tmux_template[$WEBSITE_NAME]="website"
+tmux_template[$WEBSITE_NAME]="website" # TODO: use WEBSITE_NAME?
 
 git_template[$PYTHON_NAME]="python-template"
 tmux_template[$PYTHON_NAME]="python-template"
+
+# git_template[$DEFAULT_NAME]="default-template"
+tmux_template[$DEFAULT_NAME]="default"
+
+# NOT IN USE YET
+_create_repo_and_init() {
+    # If a template is specified
+    if [ -n "${1:-}" ]; then
+        _generate_repo_from_template "$1"
+    else
+        _init_and_create_repo
+    fi
+}
 
 
 _init_and_create_repo() {
@@ -58,6 +77,25 @@ _generate_repo_from_template() {
 }
 
 
+_create_from_template() {
+    local template="$1"
+
+    git=${git_template[$template]}
+    tmux=${tmux_template[$template]}
+
+    mkdir -p "$TARGET_DIR"
+    _generate_repo_from_template "$git"
+
+    # TODO: Test if this works!!
+    # Run template‑specific setup if one exists
+    if [[ -n ${template_setup_function[$template]} ]]; then
+        "${template_setup_function[$template]}"
+    fi
+
+    _create_and_switch_tmux "$tmux"
+}
+
+
 _create_and_switch_tmux() {
     local template="${1:-"default"}"
 
@@ -94,18 +132,14 @@ _create_and_switch_tmux() {
 }
 
 
-_create_from_template() {
-    local template="$1"
+_setup_website() {
+    cd "$TARGET_DIR" || return 1
+    pnpm install
+}
 
-    git=${git_template[$template]}
-    tmux=${tmux_template[$template]}
-
-    echo "TMUXP: Loading $tmux..."
-
-    mkdir -p "$TARGET_DIR"
-    _generate_repo_from_template "$git"
-    # TODO: Run some scripts before creating the tmux session. Like "pnpm install" and "uv sync"
-    _create_and_switch_tmux "$tmux"
+_setup_python_project() {
+    cd "$TARGET_DIR" || return 1
+    uv sync
 }
 
 
