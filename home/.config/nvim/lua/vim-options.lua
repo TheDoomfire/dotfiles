@@ -13,7 +13,11 @@ vim.cmd("set mouse=a")
 vim.cmd("set autoindent")
 vim.cmd("set smarttab")
 vim.cmd("set encoding=UTF-8")
-vim.cmd("set clipboard=unnamedplus")
+
+-- vim.cmd("set clipboard=unnamedplus")
+
+-- Copy to system clipboard
+vim.opt.clipboard = "unnamedplus"
 
 -- Disable treesitter conceal globally
 vim.opt.conceallevel = 0
