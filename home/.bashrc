@@ -298,6 +298,9 @@ sysup() {
 }
 
 sysclean() {
+    local before_disk_space=$(df -h / | awk 'NR==2 {print $4}')
+    local before_disk_space_available=$(df -h / | awk 'NR==2 {print $5}')
+
     echo "--- Cleaning APT packages ---"
     sudo apt-get clean
     sudo apt-get autoclean
@@ -321,10 +324,17 @@ sysclean() {
     echo "--- Checking biggest flatpak apps ---"
     du -h --max-depth=2 ~/.var/app | sort -hr
 
-    echo "--- Current Disk Usage ---"
-    df -h / | grep /
+    # echo "--- Docker: Remove all unused containers, networks, dangling images, and build cache ---"
+    # docker system prune -a
+    
+   # TODO: Check if extra kernals are installed?
 
     cprint success "Finished cleaning!"
+    local after_disk_space=$(df -h / | awk 'NR==2 {print $4}')
+    local after_disk_space_available=$(df -h / | awk 'NR==2 {print $5}')
+    echo "Disk Space change: ${before_disk_space} -> ${after_disk_space}"
+    echo "Disk Space available change: ${before_disk_space_available} -> ${after_disk_space_available}"
+
 }
 
 distroupdate() {
@@ -583,9 +593,11 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # pnpm
-export PNPM_HOME="/home/emma/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  # *":$PNPM_HOME:"*) ;;
+  *":$PNPM_HOME:/bin"*) ;;
+  # *) export PATH="$PNPM_HOME:$PATH" ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
