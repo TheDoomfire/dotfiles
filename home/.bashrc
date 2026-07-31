@@ -324,8 +324,9 @@ sysclean() {
     echo "--- Checking biggest flatpak apps ---"
     du -h --max-depth=2 ~/.var/app | sort -hr
 
-    # echo "--- Docker: Remove all unused containers, networks, dangling images, and build cache ---"
-    # docker system prune -a
+    echo "--- Docker: Remove all unused containers, networks, dangling images, and build cache ---"
+    # docker system prune -a -f
+    docker system prune -f
     
    # TODO: Check if extra kernals are installed?
 
