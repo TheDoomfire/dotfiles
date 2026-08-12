@@ -38,6 +38,7 @@ M.palette = {
 	maroon = "#eba0ac",
 	peach = "#fab387",
 	yellow = "#f9e2af",
+    orange = "#e0af68",
 	green = "#a6e3a1",
 	teal = "#94e2d5",
 	sky = "#89dceb",
@@ -61,7 +62,7 @@ M.palette = {
 M.ui = {
 	-- -- State colors
 	-- error = M.palette.red,
-	-- warn = M.palette.orange,
+	warning = M.palette.orange,
 	-- hint = M.palette.blue,
 	-- success = M.palette.green,
 	--
@@ -71,11 +72,11 @@ M.ui = {
 	-- active = M.palette.fg,
 	-- inactive = M.palette.grey,
 
-	-- Specifically for your Tab/Bufferline
 	tab_number = M.palette.subtext1,
 	tab_dimmed_txt = M.palette.subtext0,
     tab_selected = M.palette.maroon,
     tab_active_num = M.palette.maroon,
+
 }
 
 -- Create a flattened list for Mason to consume
