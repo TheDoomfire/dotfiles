@@ -330,6 +330,9 @@ sysclean() {
     
    # TODO: Check if extra kernals are installed?
 
+    echo "--- Clears rubbish bin ---"
+    rm -rf ~/.local/share/Trash/files/* ~/.local/share/Trash/info/*
+
     cprint success "Finished cleaning!"
     local after_disk_space=$(df -h / | awk 'NR==2 {print $4}')
     local after_disk_space_available=$(df -h / | awk 'NR==2 {print $5}')
