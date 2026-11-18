@@ -576,6 +576,26 @@ minecraft() {
   java -jar SKlauncher-*.jar &
 }
 
+# TODO: Make a install script for everything that might need to be installed.
+
+# Make all AppImages in a directory executable (defaults to current directory)
+make-appimages() {
+    local target_dir="${1:-.}"
+    local count=0
+
+    while IFS= read -r -d '' file; do
+        echo "Making executable: "$file""
+        chmod +x "$file"
+        count=$((count + 1))
+    done < <(find "$target_dir" -maxdepth 1 -type f \( -name "*.AppImage" -o -name "*.appimage" \) -print0)
+
+    if [ "$count" -eq 0 ]; then
+        echo "No AppImage files found in '$target_dir'."
+    else
+        echo "Successfully made $count AppImage file(s) executable."
+    fi
+}
+
 # --- TESTING ---
 friend() {
   cprint "This is a test"

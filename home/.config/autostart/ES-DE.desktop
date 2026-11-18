@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=/mnt/emmas/Programs/ES-DE_x64.AppImage
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
+Name[en_GB]=ES-DE
+Comment[en_GB]=The frontend for games.
+X-GNOME-Autostart-Delay=0
