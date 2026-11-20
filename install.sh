@@ -20,7 +20,7 @@ rm -f "$HOME/.config/nvim/lazy-lock.json"
 # Install all apps.
 # TODO: Add all these, so install all apps. 
 # Source: https://github.com/TheDoomfire/bootstrap-os
-./scripts/install-apps.sh
+# ./scripts/install-apps.sh
 
 # Permissions for docker.
 sudo groupadd docker

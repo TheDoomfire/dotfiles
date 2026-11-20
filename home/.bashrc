@@ -607,6 +607,9 @@ friend() {
   cprint highlight "This is a highlight message"
 }
 
+if [ -f "$HOME/.bashrc.local" ]; then
+    source "$HOME/.bashrc.local"
+fi
 
 export EDITOR='nvim'
 # So I can use sudoedit
@@ -625,3 +628,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
+
+# Pi
+export PATH="$HOME/.local/bin:$PATH"
